@@ -18,6 +18,10 @@ class Tron extends NowPaymentsSupport {
         return 'tron';
     }
 
+    public function conversionID(): string {
+        return 'tron';
+    }
+    
     public function displayName(): string {
         return "Tron (TRX)";
     }

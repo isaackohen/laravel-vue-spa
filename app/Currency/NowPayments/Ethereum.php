@@ -18,6 +18,10 @@ class Ethereum extends NowPaymentsSupport {
         return "ethereum";
     }
 
+    public function conversionID(): string {
+        return 'ethereum';
+    }
+    
     public function displayName(): string {
         return "Ethereum";
     }

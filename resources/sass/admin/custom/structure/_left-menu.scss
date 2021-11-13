@@ -22,7 +22,6 @@
 .left-side-menu {
     width: $leftbar-width;
     background: $bg-leftbar;
-    border-right: 1px solid $gray-300;
     bottom: 0;
     padding: 20px 0;
     position: fixed;
@@ -154,11 +153,12 @@
             color: $menu-item;
             display: block;
             position: relative;
-            transition: all 0.4s;
+            transition: all 0.3s;
             font-size: $menu-sub-item-size;
 
             &:focus,
             &:hover {
+                background-color: $black;
                 color: $menu-item-hover;
             }
         }
@@ -208,6 +208,9 @@ li{
     }
 }
 
+.left-side-menu::-webkit-scrollbar {
+    width: 0 !important;
+}
 // Enlarge menu
 body[data-sidebar-size="condensed"] {
 
@@ -442,7 +445,7 @@ body[data-sidebar-size="condensed"] {
 
     .left-side-menu {
         display: none;
-        z-index: 10 !important;
+        z-index: 12 !important;
     }
 
     .sidebar-enable {

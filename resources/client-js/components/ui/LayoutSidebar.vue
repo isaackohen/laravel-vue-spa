@@ -7,33 +7,48 @@
 			</div>
 			
             <overlay-scrollbars :options="{ scrollbars: { autoHide: 'leave' }, className: 'os-theme-thin-light' }" class="games">
-               
-				<router-link tag="div" to="/game/category/favorite" class="game">
+                <div v-if="isGuest" @click="openAuthModal('auth')" class="game">
+                    <icon icon="fal fa-sign-in"></icon>
+                    <div class="letter-spacing">{{ $t('general.auth.login') }}</div>
+                </div>
+
+                <div v-if="isGuest" @click="openAuthModal('auth')" class="game">
+                    <icon icon="fal fa-user-plus"></icon>
+                    <div class="letter-spacing">{{ $t('general.auth.register') }}</div>
+                </div>
+
+				<router-link v-if="!isGuest" tag="div" to="/game/category/favorite" class="game">
                     <icon icon="fal fa-star"></icon>
                     <div class="letter-spacing">{{ $t('general.sidebar.favorite') }}</div>
                 </router-link>
 
-                <router-link tag="div" to="/game/category/recent" class="game">
+                <router-link v-if="!isGuest" tag="div" to="/game/category/recent" class="game">
                     <icon icon="fal fa-history"></icon>
                     <div class="letter-spacing">{{ $t('general.sidebar.recent') }}</div>
                 </router-link>
+    
+                <router-link tag="div" to="/challenges" class="game">
+                    <icon icon="fas fa-bullseye-arrow"></icon>
+                    <div class="letter-spacing">{{ $t('general.sidebar.challenges') }}</div>
+                </router-link>
 
-                <router-link tag="div" to="/browse" class="game">
-                    <icon icon="fas fa-search-dollar"></icon>
-                    <div class="letter-spacing">{{ $t('general.sidebar.searchsidebar') }}</div>
+                <router-link v-if="!isGuest" tag="div" :to="`/profile/${user.user._id}`" class="game">
+                    <icon icon="fal fa-user"></icon>
+                    <div class="letter-spacing">{{ $t('general.head.profile') }}</div>
                 </router-link>
 
                 <div onclick="window.open(window.location.origin + '/admin')" v-if="!isGuest && user.user.access === 'admin'" class="game">
                     <i class="fas fa-cog"></i>
                     <div class="letter-spacing">{{ $t('general.sidebar.admin') }}</div>
                 </div>
-				                <div class="divider"></div>
+				
+                <div class="divider"></div>
 
 				<div class="main-header">
 					{{ $t('general.head.games') }}
 				</div>
 	
-                <router-link tag="div" to="/browse" class="game">
+                <router-link tag="div" to="/" class="game">
                     <icon icon="fas fa-th-large"></icon>
                     <div class="letter-spacing">{{ $t('general.sidebar.all') }}</div>
                 </router-link>
@@ -86,10 +101,10 @@
                                 <div class="meta">
                                     <router-link :to="`/profile/${game.game.user}`" class="player">{{ game.user.name }}</router-link>
                                     <div class="currency"><icon :icon="currencies[game.game.currency].icon" :style="{ color: currencies[game.game.currency].style }"></icon> <span style="margin-right:2px;" v-if="usd">$</span><unit :to="game.game.currency" :value="game.game.profit">$</unit></div>
-                                    <router-link :to="`/game/${game.metadata.id}`" class="gameName">{{ game.metadata.name }}</router-link>
+                                    <router-link :to="`${game.game.type === 'external' ? (`/casino/` + game.metadata.id) : (`/game/` + game.metadata.id)}`" class="gameName">{{ game.metadata.name }}</router-link>
                                 </div>
                             </div>
-                            <router-link tag="div" :to="`/game/${game.metadata.id}`" class="btn btn-primary">{{ $t('general.play_now') }}</router-link>
+                            <router-link tag="div" :to="`${game.game.type === 'external' ? (`/casino/` + game.metadata.id) : (`/game/` + game.metadata.id)}`" class="btn btn-primary">{{ $t('general.play_now') }}</router-link>
                         </div>
                     </template>
                 </div>
@@ -100,7 +115,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
-import AuthModal from "../modals/AuthModal";
+    import AuthModal from "../modals/AuthModal";
     import Bus from "../../bus";
 
     export default {
@@ -166,19 +181,34 @@ import AuthModal from "../modals/AuthModal";
 			}
 
             .game.router-link-exact-active {
+                @include themed() {
+                    background: t('body');
+                                    i {
+                    color: t('secondary');
+                }
+                color: t('link-active');
+                }
+
                 &:before {
-                    background: rgba(black, .2);
+
                 }
             }
 
             .game {
                 justify-content: unset;
-                padding-left: 17px;
+                padding-left: 12px;
                 padding-right: 17px;
                 position: relative;
 
                 i {
-                    width: 25px;
+                @include themed() {
+                background: t('body');
+                }
+                border-radius: 5px;
+                padding: 6px;
+                margin-right: 10px;
+                background: black;
+                font-size: 12px;
                 }
 
                 svg {
@@ -198,7 +228,7 @@ import AuthModal from "../modals/AuthModal";
     }
 
     .letter-spacing {
-        letter-spacing: 0.3px;
+        letter-spacing: 0.20px;
     }
 
     .sidebar {
@@ -275,13 +305,13 @@ import AuthModal from "../modals/AuthModal";
                                     border-radius: 3px;
                                     cursor: pointer;
                                     display: flex;
-                                    opacity: .9;
+                                    opacity: .95;
 
                                     svg, i {
                                         margin: auto;
                                         font-size: 1em;
                                         color: t('text');
-                                        opacity: .9;
+                                        opacity: .95;
                                     }
                                 }
 
@@ -320,10 +350,12 @@ import AuthModal from "../modals/AuthModal";
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                opacity: 0.5;
-                transition: opacity 0.3s ease;
-                width: 100%;
-                height: 40px;
+                opacity: 1;
+                transition: all 0.3s ease;
+                @include themed() {
+                color: t('link');
+                }
+                height: 45px;
                 font-size: 14px;
                 cursor: pointer;
                 position: relative;
@@ -360,7 +392,13 @@ import AuthModal from "../modals/AuthModal";
                 }
 
                 &:hover {
-                    opacity: 1;
+                @include themed() {
+                    i {
+                        color: t('secondary');
+                    }
+                        background: t('body');
+                        color: t('text');
+                    }
                 }
 
                 .online {

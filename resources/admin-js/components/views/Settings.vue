@@ -18,13 +18,17 @@
 							<div class="col-xl-10 col-lg-9">
 								<div class="mt-4 mt-lg-0">
 									<h5 class="mt-0 mb-1 fw-bold">Settings list</h5>
-									<p class="text-muted mb-2">
+									<p class="text-dark mb-2">
 										These options are related to the platform settings, 
 										please make sure that the platform is in maintenance mode before changing system/default settings or platform.
 									</p>
 									<button class="btn btn-primary mt-2 me-1" id="btn-new-event" data-bs-toggle="modal" data-bs-target="#event-modal">
 										Create New Setting
 									</button>
+
+									<label for='unlockButtonsState'>
+      									<input id='unlockButtonsState' type='checkbox' v-model='unlockButtonsState' /> Enable Remove Buttons
+    								</label>
 								</div>
 							</div>
 						</div>
@@ -45,7 +49,7 @@
             <div class="col-xl-3 col-lg-6" v-for="setting in settingsMutable">
                 <div class="card">
                     <div class="card-body">
-                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-muted" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
+                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-dark" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
                         <div class="text-muted">
                             {{ setting.description }}
                             <div class="form-group mt-2">
@@ -58,9 +62,9 @@
                             <div class="col-sm-auto">
                                 <ul class="list-inline mb-0">
                                     <li class="list-inline-item pr-2">
-                                        <a @click="remove(setting.name)" href="javascript:void(0)" class="text-muted d-inline-block">
-                                            Remove
-                                        </a>
+                                        <button :disabled='unlockButtons' @click="remove(setting.name)" class="btn btn-primary btn-sm">
+                                          Remove
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -80,7 +84,7 @@
             <div class="col-xl-3 col-lg-6" v-for="setting in settingsGlobal">
                 <div class="card">
                     <div class="card-body">
-                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-muted" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
+                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-dark" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
                         <div class="text-muted">
                             {{ setting.description }}
                             <div class="form-group mt-2">
@@ -102,11 +106,11 @@
             <div class="col-xl-3 col-lg-6" v-for="setting in settingsBonus">
                 <div class="card">
                     <div class="card-body">
-                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-muted" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
+                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-dark" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
                         <div class="text-muted">
                             {{ setting.description }}
                             <div class="form-group mt-2">
-                                <input readonly :value="setting.value" type="text" class="form-control" placeholder="Value">
+                                <input @input="change(setting.name, $event.target.value)" :value="setting.value" type="text" class="form-control" placeholder="Value">
                             </div>
                         </div>
                     </div>
@@ -124,7 +128,7 @@
             <div class="col-xl-3 col-lg-6" v-for="setting in settingsImmutable">
                 <div class="card">
                     <div class="card-body">
-                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-muted" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
+                        <h5><a @click="clipboard(setting.name)" href="javascript:void(0)" class="text-dark" data-toggle="tooltip" data-placement="top" title="Copy">{{ setting.name }}</a></h5>
                         <div class="text-muted">
                             {{ setting.description }}
                             <div class="form-group mt-2">
@@ -149,6 +153,12 @@
 									<div class="mb-3">
 										<label class="form-label">Key</label>
 										<input class="form-control" placeholder="Key" type="text" id="key" v-model="newSettingKey">
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<input class="form-control" placeholder="Description" type="text" id="desc" v-model="newSettingDescription">
 									</div>
 								</div>
 								<div class="col-12">
@@ -202,12 +212,17 @@
                 settingsImmutable: [],
 				settingsBonus: [],
 				settingsGlobal: [],
-
+                unlockButtonsState: false,
                 newSettingKey: '',
                 newSettingDescription: '',
 				newSettingCat: ''
             }
         },
+        computed: {
+  			unlockButtons: function(){
+    		return !this.unlockButtonsState;
+    		},
+    	},
         methods: {
             change(key, value) {
                 axios.post('/admin/settings/edit', { key: key, value: value.length === 0 ? 'null' : value });

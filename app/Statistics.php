@@ -7,7 +7,6 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Statistics extends Model
 {
-    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
 	
 	protected $connection = 'mongodb';
 	protected $collection = 'user_statistics';

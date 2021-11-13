@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Settings;
 use App\Statistics;
 use App\Currency\Currency;
@@ -19,7 +18,6 @@ use RobThree\Auth\TwoFactorAuth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends \Jenssegers\Mongodb\Auth\User {
-    use CrudTrait;
 
     use Notifiable, HasPushSubscriptions, HasApiTokens;
 
@@ -37,16 +35,16 @@ class User extends \Jenssegers\Mongodb\Auth\User {
         'tfa', 'tfa_enabled', 'tfa_persistent_key', 'tfa_onetime_key', 'email_notified', 'dismissed_global_notifications',
         'register_ip', 'login_ip', 'register_multiaccount_hash', 'login_multiaccount_hash',
         'referral', 'referral_wager_obtained', 'referral_bonus_obtained', 'promocode_limit_reset', 'promocode_limit',
-        'bot', 'favoriteGames',
+        'bot', 'favoriteGames', 'freespins',
 
         'vk', 'fb', 'google', 'telegram', 'steam',
 
-        'btc', 'ltc', 'eth', 'doge', 'bch', 'trx', 'algo', 'btg', 'celo', 'dash', 'eos', 'xrp', 'xlm', 'xtz', 'wbtc', 'zec', 'rub',
-        'demo_btc', 'demo_ltc', 'demo_eth', 'demo_doge', 'demo_bch', 'demo_trx', 'demo_algo', 'demo_btg', 'demo_celo', 'demo_dash',
-        'demo_eos', 'demo_xrp', 'demo_xlm', 'demo_xtz', 'demo_wbtc', 'demo_zec', 'demo_rub', 'bonus',
+        'btc', 'ltc', 'eth', 'bnb', 'doge', 'bch', 'trx', 'algo', 'btg', 'celo', 'dash', 'eos', 'xrp', 'xlm', 'xtz', 'wbtc', 'zec', 'rub', 'busd', 'cake',
+        'demo_btc', 'demo_ltc', 'demo_eth', 'demo_bnb', 'demo_doge', 'demo_bch', 'demo_trx', 'demo_algo', 'demo_btg', 'demo_celo', 'demo_dash',
+        'demo_eos', 'demo_xrp', 'demo_xlm', 'demo_xtz', 'demo_wbtc', 'demo_zec', 'demo_rub', 'bonus', 'pirate', 'wallet_cg_pirate',
 
         'wallet_native_btc', 'wallet_native_ltc', 'wallet_native_eth', 'wallet_native_doge', 'wallet_native_bch', 'wallet_native_trx',
-        'wallet_bg_btc', 'wallet_bg_bch', 'wallet_bg_trx', 'wallet_bg_eos', 'wallet_bg_eth', 'wallet_bg_ltc',
+        'wallet_bg_btc', 'wallet_bg_bch', 'wallet_bg_trx', 'wallet_bg_eos', 'wallet_bg_eth', 'wallet_bg_ltc', 'wallet_np_bnb', 'wallet_np_busd', 'wallet_cake',
         'wallet_bg_algo', 'wallet_bg_btg', 'wallet_bg_celo', 'wallet_bg_dash', 'wallet_bg_eos', 'wallet_bg_xrp', 'wallet_bg_xlm',
         'wallet_bg_xtz', 'wallet_bg_wbtc', 'wallet_bg_zec', 'wallet_np_btc', 'wallet_np_eth', 'wallet_np_ltc', 'wallet_np_doge', 'wallet_np_bch', 'wallet_np_trx', 
         'wallet_trx_private_key', 'first_deposit_bonus', 'wallet_bonus', 'bonus_goal'
@@ -61,17 +59,17 @@ class User extends \Jenssegers\Mongodb\Auth\User {
         'tfa', 'tfa_enabled', 'tfa_persistent_key', 'tfa_onetime_key', 'email_notified', 'dismissed_global_notifications',
         'register_ip', 'login_ip', 'register_multiaccount_hash', 'login_multiaccount_hash', 'vip_discord_notified',
         'referral', 'referral_wager_obtained', 'referral_bonus_obtained', 'promocode_limit_reset', 'promocode_limit',
-        'bot',
+        'bot', 'freespins',
 
         'vk', 'fb', 'google', 'steam',
 
-        'btc', 'ltc', 'eth', 'doge', 'bch', 'trx', 'algo', 'btg', 'celo', 'dash', 'eos', 'xrp', 'xlm', 'xtz', 'wbtc', 'zec',
+        'btc', 'ltc', 'eth', 'doge', 'bch', 'trx', 'algo', 'btg', 'celo', 'dash', 'eos', 'xrp', 'xlm', 'xtz', 'wbtc', 'zec', 'busd', 'cake',
 		'busd', 'bnb', 'pirate',
         'demo_btc', 'demo_ltc', 'demo_eth', 'demo_doge', 'demo_bch', 'demo_trx', 'demo_algo', 'demo_btg', 'demo_celo', 'demo_dash',
         'demo_eos', 'demo_xrp', 'demo_xlm', 'demo_xtz', 'demo_wbtc', 'demo_zec', 'bonus',
 
         'wallet_native_btc', 'wallet_native_ltc', 'wallet_native_eth', 'wallet_native_doge', 'wallet_native_bch', 'wallet_native_trx',
-        'wallet_bg_btc', 'wallet_bg_bch', 'wallet_bg_trx', 'wallet_bg_eos', 'wallet_bg_eth', 'wallet_bg_ltc',
+        'wallet_bg_btc', 'wallet_bg_bch', 'wallet_bg_trx', 'wallet_bg_eos', 'wallet_bg_eth', 'wallet_bg_ltc',  'wallet_np_busd', 'wallet_cake',
         'wallet_bg_algo', 'wallet_bg_btg', 'wallet_bg_celo', 'wallet_bg_dash', 'wallet_bg_eos', 'wallet_bg_xrp', 'wallet_bg_xlm',
         'wallet_bg_xtz', 'wallet_bg_wbtc', 'wallet_bg_zec', 'wallet_np_btc', 'wallet_np_eth', 'wallet_np_ltc', 'wallet_np_doge', 'wallet_np_bch', 'wallet_np_trx',
 		'wallet_cg_busd', 'wallet_cg_bnb', 'wallet_cg_pirate', 'wallet_bonus', 'bonus_goal', 		

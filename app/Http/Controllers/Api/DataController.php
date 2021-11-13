@@ -23,7 +23,7 @@ class DataController
 	public function latestGames(Request $request) 
 	{
 		//Disabled
-        return [];
+        
 
 		$result = [];
         switch ($request->type) {
@@ -32,7 +32,8 @@ class DataController
                 break;
             case 'all':
                 $games = GameResult::latest()->where('demo', '!=', true)->where('user', '!=', null)->where('status', '!=', 'in-progress')->where('status', '!=', 'cancelled')->take($request->count)->get()->reverse();
-                break;
+                return [];
+                //break;
             case 'lucky_wins':
                 $games = GameResult::latest()->where('multiplier', '>=', 10)->where('demo', '!=', true)->where('user', '!=', null)->where('status', 'win')->take($request->count)->get()->reverse();
                 break;
@@ -40,7 +41,7 @@ class DataController
                 $hrResult = [];
                 $games = GameResult::latest()->where('demo', '!=', true)->where('user', '!=', null)->where('status', '!=', 'in-progress')->where('status', '!=', 'cancelled')->take($request->count)->get()->reverse();
                 foreach($games as $game) {
-                    if($game->wager < floatval(\App\Currency\Currency::find($game->currency)->option('high_roller_requirement'))) continue;
+                    if($game->wager < floatval(Settings::get('high_roller_requirement') / \App\Currency\Currency::find($game->currency)->tokenPrice())) continue;
                     array_push($hrResult, $game);
                 }
                 $games = $hrResult;
@@ -50,7 +51,7 @@ class DataController
         foreach($games as $game) {
             if($game->type === 'external') {
             $getgamename = (\App\Gameslist::where('id', $game->game)->first());
-            $image = 'Image/https://cdn.davidkohen.com/i/cdn'.$getgamename->image.'?q=95&mask=ellipse&auto=compress&sharp=10&w=20&h=20&fit=crop&usm=5&fm=png';
+            $image = 'Image/https://games.cdn4.dk/games'.$getgamename->image.'?q=95&mask=ellipse&auto=compress&sharp=10&w=20&h=20&fit=crop&usm=5&fm=png';
             $meta = array('id' => $game->game, 'icon' => $image, 'name' => $getgamename->name, 'category' => array($getgamename->category));
             array_push($result, [
 				'game' => $game->toArray(),
@@ -401,6 +402,7 @@ class DataController
 	{
 		return APIResponse::success(Currency::toCurrencyArray(Currency::all()));
 	}
+
 	
 	public function leaderboard(Request $request) 
 	{

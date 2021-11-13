@@ -1,6 +1,0 @@
-models:
-  Float:
-    id
-    float_with_args: float:2,8
-    float_without_args: float
-    timestamps: false

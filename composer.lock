@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f861e7f905e9d065cb1ddb451ed0c27b",
+    "content-hash": "a4989dd3e9f0e4604990a1e942b0c3ad",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -248,389 +248,6 @@
             "time": "2019-12-24T22:41:47+00:00"
         },
         {
-            "name": "backpack/crud",
-            "version": "4.1.60",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "bec5cfa11f0cd0712c79256748acf5850080c0ee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/bec5cfa11f0cd0712c79256748acf5850080c0ee",
-                "reference": "bec5cfa11f0cd0712c79256748acf5850080c0ee",
-                "shasum": ""
-            },
-            "require": {
-                "composer/package-versions-deprecated": "^1.8",
-                "creativeorange/gravatar": "~1.0",
-                "doctrine/dbal": "^2.5|^3.0",
-                "guzzlehttp/guzzle": "^7.0|^6.3",
-                "laravel/framework": "^8.0|^7.0|^6.0",
-                "prologue/alerts": "^0.4.1"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^6.0|^5.0|^4.0|^3.0",
-                "phpunit/phpunit": "~8.0|~7.0|~9.0",
-                "scrutinizer/ocular": "~1.7|~1.1",
-                "spatie/laravel-translatable": "^4.0"
-            },
-            "suggest": {
-                "backpack/filemanager": "Required to use the browse and browse_multiple fields.",
-                "backpack/generators": "Required on localhost to easily generate CRUDs, models, controllers etc.",
-                "backpack/revise-operation": "Optional operation to remember all entry changes, undo and redo them (aka audit trait).",
-                "digitallyhappy/toggle-field-for-backpack": "Optional field to toggle a boolean. Prettier alternative to the checkbox field."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\CRUD\\BackpackServiceProvider"
-                    ],
-                    "aliases": {
-                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
-                        "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\CRUD\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Creator & Maintainer"
-                }
-            ],
-            "description": "Quickly build an admin interfaces using Laravel, CoreUI, Bootstrap and jQuery.",
-            "homepage": "https://github.com/laravel-backpack/CRUD",
-            "keywords": [
-                "Admin Interface",
-                "Content management system",
-                "admin panel",
-                "admin panel for laravel",
-                "backpack",
-                "base",
-                "bootstrap 4 admin panel laravel",
-                "bread",
-                "cms",
-                "content management framework",
-                "coreui for laravel",
-                "create",
-                "crud",
-                "delete",
-                "laravel admin",
-                "read",
-                "update"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
-                "source": "https://github.com/Laravel-Backpack/CRUD/tree/4.1.60"
-            },
-            "time": "2021-11-04T09:18:49+00:00"
-        },
-        {
-            "name": "backpack/devtools",
-            "version": "1.0.28",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:Laravel-Backpack/DevTools.git",
-                "reference": "cfbd92742202eb9f5c8562276d9838a97332cf80"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.backpackforlaravel.com/dist/backpack/devtools/backpack-devtools-cfbd92742202eb9f5c8562276d9838a97332cf80-zip-fa7f2a.zip",
-                "reference": "cfbd92742202eb9f5c8562276d9838a97332cf80",
-                "shasum": "d5b6f0777406c32f7e43a756f246d99ddfb45ea3"
-            },
-            "require": {
-                "backpack/crud": "^4.1.49",
-                "backpack/generators": "^3.1.9",
-                "calebporzio/sushi": "^2.3",
-                "laravel-shift/blueprint": "^1.25",
-                "laravel/framework": "^8.0|^7.0",
-                "livewire/livewire": "^2.4"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "mockery/mockery": "^1.1",
-                "orchestra/testbench": "^6.0|^5.0|^4.0|^3.0",
-                "phpunit/phpunit": "^9.0||^8.0||^7.0",
-                "scrutinizer/ocular": "~1.7|~1.1",
-                "sempro/phpunit-pretty-print": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Backpack\\DevTools\\DevToolsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\DevTools\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit --testdox"
-                ],
-                "test-failing": [
-                    "vendor/bin/phpunit --order-by=defects --stop-on-failure"
-                ]
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Creator & Maintainer"
-                }
-            ],
-            "description": "An admin UI for generating migrations, models and CRUDs",
-            "homepage": "https://github.com/laravel-backpack/devtools",
-            "keywords": [
-                "Backpack for Laravel",
-                "DevTools",
-                "Generate Migrations",
-                "Generate Models",
-                "Generate Relationships",
-                "Generators",
-                "Laravel"
-            ],
-            "support": {
-                "source": "https://github.com/Laravel-Backpack/DevTools/tree/1.0.28",
-                "issues": "https://github.com/Laravel-Backpack/DevTools/issues"
-            },
-            "time": "2021-11-01T08:16:46+00:00"
-        },
-        {
-            "name": "backpack/generators",
-            "version": "v3.1.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/Generators.git",
-                "reference": "027a2c66dca14ef3bc91faf6fd04d27d7afd42e2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/Generators/zipball/027a2c66dca14ef3bc91faf6fd04d27d7afd42e2",
-                "reference": "027a2c66dca14ef3bc91faf6fd04d27d7afd42e2",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "4.1.*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0||^7.0",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\Generators\\GeneratorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\Generators\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Lead Developer & Maintainer"
-                },
-                {
-                    "name": "Cristian Tone",
-                    "email": "cristitone@outlook.com",
-                    "homepage": "http://updivision.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Generate files for laravel projects",
-            "homepage": "https://github.com/laravel-backpack/generators",
-            "keywords": [
-                "config",
-                "generators",
-                "model",
-                "request",
-                "view"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/Generators/issues",
-                "source": "https://github.com/Laravel-Backpack/Generators/tree/v3.1.11"
-            },
-            "time": "2021-10-12T09:31:50+00:00"
-        },
-        {
-            "name": "backpack/logmanager",
-            "version": "v4.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/LogManager.git",
-                "reference": "10c8b6021ff1b896da617b9108741d889450a945"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/LogManager/zipball/10c8b6021ff1b896da617b9108741d889450a945",
-                "reference": "10c8b6021ff1b896da617b9108741d889450a945",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^4.1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0||^7.0",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\LogManager\\LogManagerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\LogManager\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "An interface to preview, download and delete Laravel log files.",
-            "homepage": "https://github.com/laravel-backpack/LogManager",
-            "keywords": [
-                "backpack",
-                "laravel",
-                "log interface",
-                "log manager",
-                "logs"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/LogManager/issues",
-                "source": "https://github.com/Laravel-Backpack/LogManager/tree/v4.0.5"
-            },
-            "time": "2021-08-31T08:53:15+00:00"
-        },
-        {
-            "name": "backpack/pagemanager",
-            "version": "3.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/PageManager.git",
-                "reference": "4af5039fcf3d8a909f0d37bba814ec1d4a32c943"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/PageManager/zipball/4af5039fcf3d8a909f0d37bba814ec1d4a32c943",
-                "reference": "4af5039fcf3d8a909f0d37bba814ec1d4a32c943",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^4.1.0",
-                "cviebrock/eloquent-sluggable": "^8.0||^7.0||^6.0||4.8"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0||^7.0",
-                "scrutinizer/ocular": "~1.1",
-                "squizlabs/php_codesniffer": "~2.3 || ~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\PageManager\\PageManagerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\PageManager\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Architect & Developer"
-                }
-            ],
-            "description": "Create admin panels for presentation websites on Laravel, using page templates and Backpack\\CRUD.",
-            "homepage": "https://github.com/laravel-backpack/PageManager",
-            "keywords": [
-                "Content management system",
-                "admin panel",
-                "administer pages",
-                "backpack",
-                "cms",
-                "crud",
-                "manage pages",
-                "pagemanager",
-                "presentation pages",
-                "presentation website",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/PageManager/issues",
-                "source": "https://github.com/Laravel-Backpack/PageManager/tree/3.0.9"
-            },
-            "time": "2021-05-04T05:04:23+00:00"
-        },
-        {
             "name": "brick/math",
             "version": "0.9.3",
             "source": {
@@ -689,59 +306,6 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
-        },
-        {
-            "name": "calebporzio/sushi",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/calebporzio/sushi.git",
-                "reference": "9139590922edfa1db61e9aa49401889e85ed3b5f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/calebporzio/sushi/zipball/9139590922edfa1db61e9aa49401889e85ed3b5f",
-                "reference": "9139590922edfa1db61e9aa49401889e85ed3b5f",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-                "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-                "php": "^7.1.3|^8.0"
-            },
-            "require-dev": {
-                "doctrine/dbal": "^2.9",
-                "orchestra/database": "3.8.* || 3.9.* || ^4.0 || ^5.0",
-                "orchestra/testbench": "3.8.* || 3.9.* || ^4.0 || ^6.0",
-                "phpunit/phpunit": "^7.5 || ^8.4 || ^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Sushi\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Caleb Porzio",
-                    "email": "calebporzio@gmail.com"
-                }
-            ],
-            "description": "Eloquent's missing \"array\" driver.",
-            "support": {
-                "source": "https://github.com/calebporzio/sushi/tree/v2.3.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/calebporzio",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-08-18T14:28:54+00:00"
         },
         {
             "name": "clue/redis-protocol",
@@ -848,80 +412,6 @@
                 "source": "https://github.com/clue/reactphp-redis/tree/v2.3.0"
             },
             "time": "2019-03-11T10:20:19+00:00"
-        },
-        {
-            "name": "cocur/slugify",
-            "version": "v4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cocur/slugify.git",
-                "reference": "3f1ffc300f164f23abe8b64ffb3f92d35cec8307"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cocur/slugify/zipball/3f1ffc300f164f23abe8b64ffb3f92d35cec8307",
-                "reference": "3f1ffc300f164f23abe8b64ffb3f92d35cec8307",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": ">=7.0"
-            },
-            "conflict": {
-                "symfony/config": "<3.4 || >=4,<4.3",
-                "symfony/dependency-injection": "<3.4 || >=4,<4.3",
-                "symfony/http-kernel": "<3.4 || >=4,<4.3",
-                "twig/twig": "<2.12.1"
-            },
-            "require-dev": {
-                "laravel/framework": "~5.1",
-                "latte/latte": "~2.2",
-                "league/container": "^2.2.0",
-                "mikey179/vfsstream": "~1.6.8",
-                "mockery/mockery": "^1.3",
-                "nette/di": "~2.4",
-                "phpunit/phpunit": "^5.7.27",
-                "pimple/pimple": "~1.1",
-                "plumphp/plum": "~0.1",
-                "symfony/config": "^3.4 || ^4.3 || ^5.0",
-                "symfony/dependency-injection": "^3.4 || ^4.3 || ^5.0",
-                "symfony/http-kernel": "^3.4 || ^4.3 || ^5.0",
-                "twig/twig": "^2.12.1 || ~3.0",
-                "zendframework/zend-modulemanager": "~2.2",
-                "zendframework/zend-servicemanager": "~2.2",
-                "zendframework/zend-view": "~2.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cocur\\Slugify\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Florian Eckerstorfer",
-                    "email": "florian@eckerstorfer.co",
-                    "homepage": "https://florian.ec"
-                },
-                {
-                    "name": "Ivo Bathke",
-                    "email": "ivo.bathke@gmail.com"
-                }
-            ],
-            "description": "Converts a string into a slug.",
-            "keywords": [
-                "slug",
-                "slugify"
-            ],
-            "support": {
-                "issues": "https://github.com/cocur/slugify/issues",
-                "source": "https://github.com/cocur/slugify/tree/master"
-            },
-            "time": "2019-12-14T13:04:14+00:00"
         },
         {
             "name": "codenix-sv/coingecko-api",
@@ -1115,209 +605,6 @@
                 }
             ],
             "time": "2021-10-28T20:44:15+00:00"
-        },
-        {
-            "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b174585d1fe49ceed21928a945138948cb394600",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1.0 || ^2.0",
-                "php": "^7 || ^8"
-            },
-            "replace": {
-                "ocramius/package-versions": "1.11.99"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9.3 || ^2.0@dev",
-                "ext-zip": "^1.13",
-                "phpunit/phpunit": "^6.5 || ^7"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "PackageVersions\\Installer",
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PackageVersions\\": "src/PackageVersions"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com"
-                },
-                {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be"
-                }
-            ],
-            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "support": {
-                "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.4"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-09-13T08:41:34+00:00"
-        },
-        {
-            "name": "creativeorange/gravatar",
-            "version": "v1.0.20",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creativeorange/gravatar.git",
-                "reference": "8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creativeorange/gravatar/zipball/8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017",
-                "reference": "8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^5|^6|^7|^8",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "nunomaduro/larastan": "^0.6.2",
-                "orchestra/testbench": "^5.4",
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Creativeorange\\Gravatar\\GravatarServiceProvider"
-                    ],
-                    "aliases": {
-                        "Gravatar": "Creativeorange\\Gravatar\\Facades\\Gravatar"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Creativeorange\\Gravatar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jaco Tijssen",
-                    "email": "jaco@creativeorange.nl",
-                    "homepage": "https://www.creativeorange.nl",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel Gravatar package for retrieving gravatar image URLs or checking the existance of an image.",
-            "keywords": [
-                "avatar",
-                "gravatar",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/creativeorange/gravatar/issues",
-                "source": "https://github.com/creativeorange/gravatar/tree/v1.0.20"
-            },
-            "time": "2020-09-09T14:53:57+00:00"
-        },
-        {
-            "name": "cviebrock/eloquent-sluggable",
-            "version": "7.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cviebrock/eloquent-sluggable.git",
-                "reference": "b3616ff51a80f8f408879b2f41936e8b45748e13"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/b3616ff51a80f8f408879b2f41936e8b45748e13",
-                "reference": "b3616ff51a80f8f408879b2f41936e8b45748e13",
-                "shasum": ""
-            },
-            "require": {
-                "cocur/slugify": "^4.0",
-                "illuminate/config": "^7.0",
-                "illuminate/database": "^7.0",
-                "illuminate/support": "^7.0",
-                "php": "^7.2.5|^8.0"
-            },
-            "require-dev": {
-                "limedeck/phpunit-detailed-printer": "^5.0",
-                "mockery/mockery": "^1.2.3",
-                "orchestra/database": "^5.0",
-                "orchestra/testbench": "^5.0",
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Cviebrock\\EloquentSluggable\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cviebrock\\EloquentSluggable\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Colin Viebrock",
-                    "email": "colin@viebrock.ca"
-                }
-            ],
-            "description": "Easy creation of slugs for your Eloquent models in Laravel",
-            "homepage": "https://github.com/cviebrock/eloquent-sluggable",
-            "keywords": [
-                "eloquent",
-                "eloquent-sluggable",
-                "laravel",
-                "lumen",
-                "slug",
-                "sluggable"
-            ],
-            "support": {
-                "issues": "https://github.com/cviebrock/eloquent-sluggable/issues",
-                "source": "https://github.com/cviebrock/eloquent-sluggable/tree/7.0.2"
-            },
-            "time": "2020-12-08T23:04:55+00:00"
         },
         {
             "name": "digitaldonkey/ecverify",
@@ -2244,16 +1531,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v5.5.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "cf814442ce0e9eebe5317d61b63ccda4b85de67a"
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/cf814442ce0e9eebe5317d61b63ccda4b85de67a",
-                "reference": "cf814442ce0e9eebe5317d61b63ccda4b85de67a",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
                 "shasum": ""
             },
             "require": {
@@ -2295,9 +1582,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.5.0"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
-            "time": "2021-11-04T16:21:41+00:00"
+            "time": "2021-11-08T20:18:51+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -2736,16 +2023,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.219.0",
+            "version": "v0.221.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "ea990973edf24d959c9e9f550182a53672d5a4bc"
+                "reference": "55fb77c4dcb7ec2b41128d41815b3aac65ddfadb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/ea990973edf24d959c9e9f550182a53672d5a4bc",
-                "reference": "ea990973edf24d959c9e9f550182a53672d5a4bc",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/55fb77c4dcb7ec2b41128d41815b3aac65ddfadb",
+                "reference": "55fb77c4dcb7ec2b41128d41815b3aac65ddfadb",
                 "shasum": ""
             },
             "require": {
@@ -2774,9 +2061,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.219.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.221.0"
             },
-            "time": "2021-10-06T11:20:29+00:00"
+            "time": "2021-11-06T11:26:11+00:00"
         },
         {
             "name": "google/auth",
@@ -3845,104 +3132,6 @@
             "time": "2021-01-08T15:12:09+00:00"
         },
         {
-            "name": "laravel-shift/blueprint",
-            "version": "v1.25.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-shift/blueprint.git",
-                "reference": "67cfc6b01c50545a5f050fa4f88633993e759f21"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/blueprint/zipball/67cfc6b01c50545a5f050fa4f88633993e759f21",
-                "reference": "67cfc6b01c50545a5f050fa4f88633993e759f21",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "^2.9 || ^3.0",
-                "illuminate/console": "^6.0 || ^7.0 || ^8.0",
-                "illuminate/filesystem": "^6.0 || ^7.0 || ^8.0",
-                "illuminate/support": "^6.0 || ^7.0 || ^8.0",
-                "laravel-shift/faker-registry": "^0.1",
-                "symfony/yaml": "^4.3 || ^5.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.3",
-                "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-                "phpunit/phpunit": "^8.0 || ^9.3"
-            },
-            "suggest": {
-                "jasonmccreary/laravel-test-assertions": "Required to use additional assertions in generated tests (^1.0)."
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Blueprint\\BlueprintServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Blueprint\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "An expressive, human readable code generation tool.",
-            "keywords": [
-                "framework",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel-shift/blueprint/issues",
-                "source": "https://github.com/laravel-shift/blueprint/tree/v1.25.0"
-            },
-            "time": "2021-08-13T18:44:57+00:00"
-        },
-        {
-            "name": "laravel-shift/faker-registry",
-            "version": "v0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-shift/faker-registry.git",
-                "reference": "051c1d50f428b699ee9456072f9c54cb073a006f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/faker-registry/zipball/051c1d50f428b699ee9456072f9c54cb073a006f",
-                "reference": "051c1d50f428b699ee9456072f9c54cb073a006f",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0|^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Shift\\Faker\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jason McCreary",
-                    "email": "jason@pureconcepts.net"
-                }
-            ],
-            "description": "A registry for generating Faker data from a name or data type.",
-            "support": {
-                "issues": "https://github.com/laravel-shift/faker-registry/issues",
-                "source": "https://github.com/laravel-shift/faker-registry/tree/v0.1"
-            },
-            "time": "2020-07-23T16:20:46+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v7.30.4",
             "source": {
@@ -4541,78 +3730,6 @@
                 }
             ],
             "time": "2021-09-25T08:23:19+00:00"
-        },
-        {
-            "name": "livewire/livewire",
-            "version": "v2.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/livewire/livewire.git",
-                "reference": "991e5bd8a48e450d23cd55336964f916e92a6464"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/991e5bd8a48e450d23cd55336964f916e92a6464",
-                "reference": "991e5bd8a48e450d23cd55336964f916e92a6464",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
-                "illuminate/validation": "^7.0|^8.0",
-                "php": "^7.2.5|^8.0",
-                "symfony/http-kernel": "^5.0"
-            },
-            "require-dev": {
-                "calebporzio/sushi": "^2.1",
-                "laravel/framework": "^7.0|^8.0",
-                "mockery/mockery": "^1.3.1",
-                "orchestra/testbench": "^5.0|^6.0",
-                "orchestra/testbench-dusk": "^5.2|^6.0",
-                "phpunit/phpunit": "^8.4|^9.0",
-                "psy/psysh": "@stable"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Livewire\\LivewireServiceProvider"
-                    ],
-                    "aliases": {
-                        "Livewire": "Livewire\\Livewire"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Livewire\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Caleb Porzio",
-                    "email": "calebporzio@gmail.com"
-                }
-            ],
-            "description": "A front-end framework for Laravel.",
-            "support": {
-                "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.7.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/calebporzio",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-10-20T02:27:35+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -6297,76 +5414,6 @@
             "time": "2021-10-05T19:02:38+00:00"
         },
         {
-            "name": "prologue/alerts",
-            "version": "0.4.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prologuephp/alerts.git",
-                "reference": "a6412e318c0171526bc8b25ef597f2cc61f5b800"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prologuephp/alerts/zipball/a6412e318c0171526bc8b25ef597f2cc61f5b800",
-                "reference": "a6412e318c0171526bc8b25ef597f2cc61f5b800",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "~5|~6|~7|~8",
-                "illuminate/session": "~5|~6|~7|~8",
-                "illuminate/support": "~5|~6|~7|~8",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Prologue\\Alerts\\AlertsServiceProvider"
-                    ],
-                    "aliases": {
-                        "Alert": "Prologue\\Alerts\\Facades\\Alert"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Prologue\\Alerts\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries Vints",
-                    "email": "dries.vints@gmail.com",
-                    "homepage": "http://driesvints.com",
-                    "role": "Creator"
-                },
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "hello@tabacitu.ro",
-                    "homepage": "http://tabacitu.ro",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Prologue Alerts is a package that handles global site messages.",
-            "keywords": [
-                "alerts",
-                "laravel",
-                "messages"
-            ],
-            "support": {
-                "issues": "https://github.com/prologuephp/alerts/issues",
-                "source": "https://github.com/prologuephp/alerts/tree/master"
-            },
-            "time": "2020-09-08T14:24:39+00:00"
-        },
-        {
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -6417,20 +5464,20 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "autoload": {
@@ -6459,9 +5506,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.1"
+                "source": "https://github.com/php-fig/container/tree/1.1.2"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2021-11-05T16:50:12+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -7913,7 +6960,6 @@
             ],
             "description": "Ethereum web3 interface.",
             "support": {
-                "issues": "https://github.com/sc0Vu/web3.php/issues",
                 "source": "https://github.com/sc0Vu/web3.php/tree/master"
             },
             "time": "2019-10-03T14:41:19+00:00"
@@ -10959,81 +10005,6 @@
             "time": "2021-08-31T12:49:16+00:00"
         },
         {
-            "name": "symfony/yaml",
-            "version": "v5.3.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7",
-                "reference": "4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "conflict": {
-                "symfony/console": "<4.4"
-            },
-            "require-dev": {
-                "symfony/console": "^4.4|^5.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
-            },
-            "bin": [
-                "Resources/bin/yaml-lint"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Loads and dumps YAML files",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/yaml/tree/v5.3.6"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-07-29T06:20:01+00:00"
-        },
-        {
             "name": "textalk/websocket",
             "version": "1.5.5",
             "source": {
@@ -12040,69 +11011,6 @@
             },
             "abandoned": "laminas/laminas-diactoros",
             "time": "2019-08-06T17:53:53+00:00"
-        },
-        {
-            "name": "ziming/json-field-for-backpack",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ziming/json-field-for-backpack.git",
-                "reference": "fa9ee1960b4c233c12c590eaba503565e4050aa6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ziming/json-field-for-backpack/zipball/fa9ee1960b4c233c12c590eaba503565e4050aa6",
-                "reference": "fa9ee1960b4c233c12c590eaba503565e4050aa6",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^4.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Ziming\\JsonFieldForBackpack\\AddonServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ziming\\JsonFieldForBackpack\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "ziming",
-                    "email": "ziming.opensource@gmail.com"
-                },
-                {
-                    "name": "vesper8"
-                },
-                {
-                    "name": "stephanus-stuff"
-                }
-            ],
-            "description": "A Json Editor Field for Backpack",
-            "homepage": "https://github.com/ziming/json-field-for-backpack",
-            "keywords": [
-                "Backpack for Laravel",
-                "addon",
-                "admin panel",
-                "backpack",
-                "field",
-                "json",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/ziming/json-field-for-backpack/issues",
-                "source": "https://github.com/ziming/json-field-for-backpack/tree/1.0"
-            },
-            "time": "2020-11-02T16:15:03+00:00"
         }
     ],
     "packages-dev": [

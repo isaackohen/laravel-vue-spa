@@ -66,7 +66,7 @@ class Investment extends Model {
         $usersWon = DB::table('games')->where('created_at', '>=', $created_at)->where('created_at', '<=', $till_created_at == null ? now() : $till_created_at)->where('demo', '!=', true)->where('currency', $currency->id())->where('status', 'win')->where('user', $user)->sum('profit');
         $usersWonWager = DB::table('games')->where('created_at', '>=', $created_at)->where('created_at', '<=', $till_created_at == null ? now() : $till_created_at)->where('demo', '!=', true)->where('currency', $currency->id())->where('status', 'win')->where('user', $user)->sum('wager');
         $usersLost = DB::table('games')->where('created_at', '>=', $created_at)->where('created_at', '<=', $till_created_at == null ? now() : $till_created_at)->where('demo', '!=', true)->where('currency', $currency->id())->where('status', 'lose')->where('user', $user)->sum('wager');
-        return $usersLost - ($usersWon - $usersWonWager);
+        return ($usersWon - $usersWonWager) - $usersLost;
     }
 
 }

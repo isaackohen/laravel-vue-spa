@@ -26,14 +26,17 @@
                             }
                         },
                         computed: {
-                            ...mapGetters(['channel'])
+                            ...mapGetters(['currencies', 'currency', 'channel', 'usd'])
                         },
                         methods: {
+							setPrecision() {
+								this.money.precision = this.currency.startsWith('local_') ? 2 : (this.usd ? 2 : 8);
+							},
                             rain() {
                                 this.disabled = true;
 
                                 axios.post('/api/chat/rain', {
-                                    amount: parseFloat(this.amount),
+                                    amount: (this.usd ? (parseFloat(this.amount) / this.currencies[this.currency].price) : parseFloat(this.amount)),
                                     users: this.number_of_users,
                                     channel: this.channel
                                 }).then(() => Bus.$emit('modal:close')).catch((error) => {
@@ -50,6 +53,9 @@
                                 });
                             }
                         },
+						created() {
+							this.setPrecision();
+						},
                         template: `
                                 <div>
                                     <div class="cc_label">{{ $t('general.chat_commands.modal.rain.amount') }}</div>

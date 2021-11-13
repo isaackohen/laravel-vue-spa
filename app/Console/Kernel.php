@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command(ResetWeeklyBonus::class)->sundays();
 		$schedule->command(WalletReset::class)->daily();
        // $schedule->command(ProcessTRXPayments::class)->everyMinute();
-	   $schedule->command(PullingWallet::class)->everyTwoMinutes();
+	   //$schedule->command(PullingWallet::class)->everyTwoMinutes();
        $schedule->command(MindepositUpdate::class)->everyThirtyMinutes();
 
         $expression = Cache::get('schedule:expressions:rain');

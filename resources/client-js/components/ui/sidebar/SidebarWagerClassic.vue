@@ -58,7 +58,7 @@
         },
         methods: {
             setPrecision() {
-                this.bet = this.usd ? 0.00 : (this.currency.startsWith('local_') ? 0.00 : 0.00000000);
+                this.bet = this.usd ? ((this.currencies[this.currency].min_bet * this.currencies[this.currency].price) * 1.0005).toFixed(2) : (this.currency.startsWith('local_') ? ((this.currencies[this.currency].min_bet * this.currencies[this.currency].price) * 1.0005).toFixed(2) : (this.currencies[this.currency].min_bet).toFixed(8));
                 this.money.precision = this.usd ? 2 : (this.currency.startsWith('local_') ? 2 : 8);
             }
         },

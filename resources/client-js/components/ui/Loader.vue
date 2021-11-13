@@ -1,6 +1,6 @@
 <template>
     <div class="loaderContainer">
-            <img style="height: 50px;" src="https://bgame.io/assets/images/logo/loading.gif">
+            <img style="height: 65px;" src="https://games.cdn4.dk/loading.gif">
     </div>
 </template>
 

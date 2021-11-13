@@ -20,6 +20,10 @@ class Bonus extends LocalCurrency {
         return "bonus";
     }
 
+    public function conversionID(): string {
+        return "bonus";
+    }
+
     function displayName(): string {
         return "BONUS";
     }

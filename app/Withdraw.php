@@ -10,7 +10,7 @@ class Withdraw extends Model {
     protected $collection = 'withdraws';
 
     protected $fillable = [
-        'user', 'sum', 'type', 'currency', 'address', 'status', 'decline_reason'
+        'user', 'sum', 'type', 'currency', 'address', 'status', 'decline_reason', 'usd'
     ];
 
 }

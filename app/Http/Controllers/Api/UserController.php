@@ -99,7 +99,7 @@ class UserController
             
             if($game->type === 'external') {
             $getgamename = (Gameslist::where('id', $game->game)->first());
-            $image = 'Image/https://cdn.davidkohen.com/i/cdn'.$getgamename->image.'?q=95&mask=ellipse&auto=compress&sharp=10&w=20&h=20&fit=crop&usm=5&fm=png';
+            $image = 'Image/https://games.cdn4.dk/games'.$getgamename->image.'?q=95&mask=ellipse&auto=compress&sharp=10&w=20&h=20&fit=crop&usm=5&fm=png';
             $meta = array('id' => $game->game, 'icon' => $image, 'name' => $getgamename->name, 'category' => array($getgamename->category));
 
             } else {

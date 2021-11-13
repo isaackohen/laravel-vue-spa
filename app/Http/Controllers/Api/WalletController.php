@@ -75,7 +75,7 @@ class WalletController
         auth('sanctum')->user()->reset2FAOneTimeToken();
         $currency = Currency::find($request->currency);
 		$manualTrigger = floatval($currency->option('withdraw_manual_trigger'));
-        $manualTrigger = number_format(($manualTrigger), 7, '.', '');
+        $manualTrigger = number_format(($manualTrigger), 8, '.', '');
         if($request->sum < floatval($currency->option('withdraw')) + floatval($currency->option('fee'))) return APIResponse::reject(1, 'Invalid withdraw value');
         if(auth('sanctum')->user()->balance($currency)->get() < $request->sum + floatval($currency->option('fee'))) return APIResponse::reject(2, 'Not enough balance');
         if(Withdraw::where('user', auth('sanctum')->user()->_id)->where('status', 0)->count() > 0) return APIResponse::reject(3, 'Moderation is still in process');
@@ -145,11 +145,169 @@ class WalletController
 						$withdraw->update(['hash' => $resultdecoded["txid"]]);
 						return APIResponse::success();
 					}  
-			}
-		return APIResponse::success();
+						} else {
+
+
+	       			 try {
+				            $url = "https://api.nowpayments.io/v1/auth";
+				            $curljwt = curl_init($url);
+				            curl_setopt($curljwt, CURLOPT_URL, $url);
+				            curl_setopt($curljwt, CURLOPT_POST, true);
+				            curl_setopt($curljwt, CURLOPT_RETURNTRANSFER, true);
+				            $headers = array(
+				               "Content-Type: application/json",
+				            );
+				            curl_setopt($curljwt, CURLOPT_HTTPHEADER, $headers);
+$data = <<<DATA
+{
+            "email": "captain@treasurekey.bet",
+            "password": "fw6pA2Adwzz3TczqS99VQQTRW5572" 
+        }
+DATA;
+				                curl_setopt($curljwt, CURLOPT_POSTFIELDS, $data);
+				                //for debug only!
+				                curl_setopt($curljwt, CURLOPT_SSL_VERIFYHOST, false);
+				                curl_setopt($curljwt, CURLOPT_SSL_VERIFYPEER, false);
+				                $response = curl_exec($curljwt);
+				                curl_close($curljwt);
+				                } catch (\Exception $exception) {
+				            return reject(2, 'Could not process request');
+				        }
+				        $responseResult = json_decode($response);
+				        Log::notice(json_encode($response));
+
+						 if($responseResult !== null) {
+
+						Log::notice($request->wallet);
+						Log::notice($currency->nowpayments());
+						Log::notice($request->sum);
+						$usercurrenccy = $currency->nowpayments();
+						$appUrls = env('APP_URL');
+						$sumformat = number_format(floatval($request->sum), 6, '.', '');
+						$ipnwithdr = $appUrls.'api/callback/nowpayments/withdrawals';
+						try {
+						$curl = curl_init();
+						curl_setopt_array($curl, array(
+						  CURLOPT_URL => 'https://api.nowpayments.io/v1/payout',
+						  CURLOPT_RETURNTRANSFER => true,
+						  CURLOPT_ENCODING => '',
+						  CURLOPT_MAXREDIRS => 10,
+						  CURLOPT_TIMEOUT => 0,
+						  CURLOPT_FOLLOWLOCATION => true,
+						  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						  CURLOPT_CUSTOMREQUEST => 'POST',
+						  CURLOPT_POSTFIELDS =>'{
+						    "withdrawals": [
+						        {
+						            "address": "'.$request->wallet.'",
+						            "currency": "'.$usercurrenccy.'",
+						            "ipn_callback_url": "'.$ipnwithdr.'",
+						            "amount": '.$sumformat.'
+						        }
+						    ]
+						}',
+						  CURLOPT_HTTPHEADER => array(
+						    'x-api-key: V68WSXK-8GQMEJG-GQFEYHR-HT02EYS',
+						    'Content-Type: application/json',
+						    'Authorization: Bearer '.$responseResult->token.''
+						  ),
+						));
+						$responsewithdraw = curl_exec($curl);
+						curl_close($curl);
+						Log::notice(json_encode($responsewithdraw));
+
+						 } catch (\Exception $exception) {
+						            Log::notice($exception);
+						            return reject(2, 'Could not process request');
+						        }
+						}
+
 		}
+
+		return APIResponse::success();
 	}
+}
 	
+	public function withdrawBnb(Request $request) 
+	{
+
+
+	       			 try {
+				            $url = "https://api.nowpayments.io/v1/auth";
+				            $curljwt = curl_init($url);
+				            curl_setopt($curljwt, CURLOPT_URL, $url);
+				            curl_setopt($curljwt, CURLOPT_POST, true);
+				            curl_setopt($curljwt, CURLOPT_RETURNTRANSFER, true);
+				            $headers = array(
+				               "Content-Type: application/json",
+				            );
+				            curl_setopt($curljwt, CURLOPT_HTTPHEADER, $headers);
+$data = <<<DATA
+{
+            "email": "captain@treasurekey.bet",
+            "password": "fw6pA2Adwzz3TczqS99VQQTRW5572" 
+        }
+DATA;
+				                curl_setopt($curljwt, CURLOPT_POSTFIELDS, $data);
+				                //for debug only!
+				                curl_setopt($curljwt, CURLOPT_SSL_VERIFYHOST, false);
+				                curl_setopt($curljwt, CURLOPT_SSL_VERIFYPEER, false);
+				                $response = curl_exec($curljwt);
+				                curl_close($curljwt);
+				                } catch (\Exception $exception) {
+				            return reject(2, 'Could not process request');
+				        }
+				        $responseResult = json_decode($response);
+						echo json_encode($response);
+						$sumformat = number_format(floatval('1'), 6, '.', '');
+						$rwallet = "0x1485928aD8bf0649ef697973565eFdCc00dA68cE";
+						$usercurrenccy = 'bnbbsc';
+						 if($responseResult !== null) {
+		return[];
+
+						$appUrls = env('APP_URL');
+						$ipnwithdr = $appUrls.'api/callback/nowpayments/withdrawals';
+
+						try {
+						$curl = curl_init();
+						curl_setopt_array($curl, array(
+						  CURLOPT_URL => $nowpaymentsUrl,
+						  CURLOPT_RETURNTRANSFER => true,
+						  CURLOPT_ENCODING => '',
+						  CURLOPT_MAXREDIRS => 10,
+						  CURLOPT_TIMEOUT => 0,
+						  CURLOPT_FOLLOWLOCATION => true,
+						  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						  CURLOPT_CUSTOMREQUEST => 'POST',
+						  CURLOPT_POSTFIELDS =>'{
+						    "withdrawals": [
+						        {
+						            "address": "'.$rwallet.'",
+						            "currency": "'.$usercurrenccy.'",
+						            "ipn_callback_url": "'.$ipnwithdr.'",
+						            "amount": "'.$sumformat.'"
+						        }
+						    ]
+						}',
+							  CURLOPT_HTTPHEADER => array(
+						    'x-api-key: K7G74DH-3RV4WBN-N7DCTHV-GTFEKRH',
+						    'Content-Type: application/json',
+						    'Authorization: Bearer '.$responseResult->token.''
+						  ),
+						));
+						$responsewithdraw = curl_exec($curl);
+						curl_close($curl);
+						echo json_encode($responseResult->token);
+
+						echo json_encode($responsewithdraw);
+
+						 } catch (\Exception $exception) {
+						            Log::notice($exception);
+						            return reject(2, 'Could not process request');
+						        }
+						}
+}
+
 	public function cancelWithdraw(Request $request) 
 	{
         $withdraw = Withdraw::where('_id', $request->id)->where('user', auth('sanctum')->user()->_id)->where('status', 0)->first();
@@ -164,6 +322,9 @@ class WalletController
 	
 	public function exchange(Request $request) 
 	{
+		//Disabled
+		return;
+
 		if(!auth('sanctum')->user()->validate2FA(false)) return APIResponse::invalid2FASession();
         auth('sanctum')->user()->reset2FAOneTimeToken();
         $currencyFrom = Currency::find($request->from);

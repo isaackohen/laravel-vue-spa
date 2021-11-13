@@ -18,6 +18,10 @@ class Litecoin extends NowPaymentsSupport {
         return 'litecoin';
     }
 
+    public function conversionID(): string {
+        return 'litecoin';
+    }
+    
     public function displayName(): string {
         return "Litecoin";
     }

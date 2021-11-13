@@ -27,8 +27,8 @@
             <div class="col-xl-3 col-lg-6" v-for="code in promo">
                 <div class="card">
                     <div class="card-body" :set="data = getData(code)">
-                        <div :class="`badge badge-soft-danger float-end`">{{ code.sum.toFixed(code.currency.startsWith('local_') ? 2 : 8) }} {{ currencies[code.currency].name }}</div>
-                        <h4><a href="javascript:void(0)" class="text-muted">{{ code.code }}</a></h4>
+                        <div :class="`badge bg-danger float-end`">{{ code.sum.toFixed(2) }}$ {{ currencies[code.currency].name }}</div>
+                        <h4><a href="javascript:void(0)" class="text-dark">{{ code.code }}</a></h4>
                         <div class="text-muted mb-4">
                             <div>Created: {{ new Date(code.created_at).toLocaleString() }}</div>
                             <div>Usages: {{ code.times_used }}<span v-if="code.usages >= 0">/{{ code.usages }}</span></div>
@@ -45,7 +45,7 @@
                                 <ul class="list-inline mb-0">
                                     <li class="list-inline-item pr-2">
                                         <a @click="remove(code._id)" href="javascript:void(0)" class="text-muted d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove">
-                                            Remove
+                                            <unicon name="trash-alt" fill="#6b768d"></unicon> Remove
                                         </a>
                                     </li>
                                 </ul>
@@ -63,11 +63,11 @@
         <div class="modal fade" id="create" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-hidden="true">×</button>
-                        <h5 class="modal-title">Promocode</h5>
+                    <div class="modal-header p-2 border-bottom-0 d-block">
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-hidden="true"></button>
+                        <h5 class="modal-title">Create Promocode</h5>
                     </div>
-                    <div class="modal-body p-4">
+                    <div class="modal-body p-2">
                         <form class="needs-validation" name="event-form" id="form-event" novalidate="">
                             <div class="row">
                                 <div class="col-12">
@@ -82,16 +82,16 @@
                                         <small><a href="javascript:void(0)" @click="usages = '%infinite%';">Unlimited</a></small>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Expire</label>
+                                        <label class="control-label">Expire Date</label>
                                         <input class="form-control flatpickr-input" placeholder="Time" type="text" id="expires" readonly>
                                         <small><a href="javascript:void(0)" onclick="$('#expires').val('%unlimited%')">Unlimited</a></small>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Amount</label>
+                                        <label class="control-label">Amount in USD</label>
                                         <input class="form-control flatpickr-input" placeholder="Amount" type="text" id="sum" v-model="amount">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Currency</label>
+                                        <label class="control-label">Credited Currency</label>
                                         <select class="form-control" id="currency">
                                             <option v-for="currency in currencies" v-if="currency.balance" :value="currency.id">{{ currency.name }}</option>
                                         </select>
@@ -173,3 +173,14 @@
         }
     }
 </script>
+<style lang="scss">
+    .form-group {
+        margin-top: 6px;
+        margin-bottom: 3px;
+    }
+    .modal-title {
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+</style>

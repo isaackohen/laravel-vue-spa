@@ -8,20 +8,22 @@
 			 <i class="fas fa-search"></i> {{ $t('general.sidebar.search') }}
 		  </div>
 		  
-			<div class="container-fluid">
+			<div class="container-fluid" style="max-width: 1375px;">
 			   <div class="search">
 				  <div class="row-list">
-					 <div class="col-md-8">
+					 <div class="col-12 col-sm-10 col-md-10">
 						<input v-model="keyword" autocomplete="off" type="text" class="lobby search-input" :placeholder="'Search in ' + count + ' games..'" name="">
 					 </div>
-					 <div class="col-md-4">
+					 <div class="col-12 col-sm-2 col-md-2">
 						<div class="row-list">
 						   <div class="provider-select-menu">
-							  <button @click="openProviders" class="btn btn-primary searchbar"><i :class="'fas ' + (ProvidersList ? 'fa-chevron-up' : 'fa-chevron-down')" aria-hidden="true"></i> Select Providers</button>		
+							  <button @click="openProviders" class="btn btn-primary searchbar"><i :class="'fas ' + (ProvidersList ? 'fa-chevron-up' : 'fa-chevron-down')" aria-hidden="true"></i> Provider</button>		
 						   </div>
+						   <!--
 						   <div class="categories-select-menu">
 							  <button @click="openCategories" class="btn btn-primary searchbar"><i :class="'fas ' + (CategoriesList ? 'fa-chevron-up' : 'fa-chevron-down')" aria-hidden="true"></i> Select Categories</button>		
 						   </div>
+						   !-->
 						</div>
 					 </div>
 					 <div class="list-providers" :class="{ 'show' : ProvidersList }">
@@ -76,7 +78,7 @@
 			   <template v-for="(cat, key) in categoryGames">
 				  <div class="games">
 					 <div v-for="game in cat" :key="game.id" :class="`game_poster_${game.type} game-${game.id} game_type-${game.type} hvr-float-shadow`">
-						<div :class="`game_poster_${game.type}-image game_tp-image`" v-if="game.ext" :style="`background: url('https://cdn.davidkohen.com/games${game.icon}?q=93&auto=format&fit=crop&sharp=5&w=205&h=137&usm=5') no-repeat !important; background-position-x: center !important;`"  @click="game.ext ? $router.push(`/casino/${game.id}`) : $router.push(`/game/${game.id}`)">
+						<div :class="`game_poster_${game.type}-image game_tp-image`" v-if="game.ext" :style="`background: url('https://games.cdn4.dk/games${game.icon}?q=93&auto=format&fit=crop&sharp=5&w=205&h=137&usm=5') no-repeat !important; background-position-x: center !important;`"  @click="game.ext ? $router.push(`/casino/${game.id}`) : $router.push(`/game/${game.id}`)">
 						   <div :class="`game_poster_${game.type}-provider`" v-if="game.ext" @click="game.ext ? $router.push(`/casino/${game.id}`) : $router.push(`/game/${game.id}`)">
 							  {{ game.p }}
 						   </div>
@@ -285,6 +287,7 @@
 		margin-top: 20px;
 		min-height: 60px;
 		padding: 10px;
+		justify-content: center;
 		border-radius: 16px;
 		
 		.custom-select-option {
@@ -334,22 +337,22 @@
 		    display: flex;
 			flex-wrap: wrap;
 			
-			.col-md-8,.col-md-4 {
+			.col-md-10,.col-md-2 {
 				position: relative;
 				width: 100%;
-				padding-right: 15px;
-				padding-left: 15px;
+				padding-right: 5px;
+				padding-left: 5px;
 			}
 			
 			@media (min-width: 768px) {
-				.col-md-8 {
-					flex: 0 0 66.6666666667%;
-					max-width: 66.6666666667%;
+				.col-md-10 {
+					flex: 0 0 80%;
+					max-width: 80%;
 				}
 				
-				.col-md-4 {
-					flex: 0 0 33.3333333333%;
-					max-width: 33.3333333333%;
+				.col-md-2 {
+					flex: 0 0 20%;
+					max-width: 20%;
 				}
 			}
 			
@@ -370,7 +373,10 @@
 			border-radius: 16px;
 			color: #fff;
 			transition: width 0.4s linear;
-			background: #1b1b1b;
+			border-radius: .15rem;
+			@include themed() {
+				background: t('header');
+			}
 			margin-top: 5px;
 			height: 100%;
 		}
@@ -383,7 +389,7 @@
 			margin: 10px 10px 0px 10px;
 			
 			.searchbar {
-				padding: 12px 20px;
+				padding: 12px 10px;
 			}
 			
 		}

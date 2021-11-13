@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use \Cache;
 use App\Settings;
 use App\Promocode;
+use App\Challenges;
 use Carbon\Carbon;
 use App\Statistics;
 use App\Transaction;
@@ -16,8 +17,14 @@ use App\TransactionStatistics;
 
 class BonusController
 {
-	
-	public function activatePromo(Request $request) 
+
+
+    public function challenges()
+    {
+        return APIResponse::success(Challenges::get()->toArray());
+    }
+
+    	public function activatePromo(Request $request) 
 	{
         $promocode = Promocode::where('code', $request->code)->first();
         if($promocode == null) return APIResponse::reject(1, 'Invalid promocode');
@@ -75,20 +82,20 @@ class BonusController
 		$currency = Currency::find(Settings::get('bonus_currency'));
 
         $slices = [
-			$currency->convertUSDToToken(Settings::get('partner_bonus_1')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_2')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_3')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_4')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_5')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_6')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_7')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_8')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_9')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_10')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_11')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_12')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_13')),
-            $currency->convertUSDToToken(Settings::get('partner_bonus_14'))
+			$currency->convertUSDToToken((float) Settings::get('partner_bonus_1')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_2')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_3')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_4')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_5')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_6')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_7')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_8')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_9')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_10')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_11')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_12')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_13')),
+            $currency->convertUSDToToken((float) Settings::get('partner_bonus_14'))
         ];
 
         $slice = mt_rand(0, count($slices) - 1);
@@ -110,17 +117,17 @@ class BonusController
 		$currency = Currency::find(Settings::get('bonus_currency'));
 		
         $slices = [
-            [40, $currency->convertUSDToToken(Settings::get('wheel_bonus_1', 1.00))],
-            [30, $currency->convertUSDToToken(Settings::get('wheel_bonus_2', 1.10))],
-            [21, $currency->convertUSDToToken(Settings::get('wheel_bonus_3', 0.5))],
-            [15, $currency->convertUSDToToken(Settings::get('wheel_bonus_4', 0.5))],
-            [15, $currency->convertUSDToToken(Settings::get('wheel_bonus_5', 0.6))],
-            [7, $currency->convertUSDToToken(Settings::get('wheel_bonus_6', 0.8))],
-            [0.80, $currency->convertUSDToToken(Settings::get('wheel_bonus_7', 0.95))],
-            [0.50, $currency->convertUSDToToken(Settings::get('wheel_bonus_8', 1.5))],
-            [0.35, $currency->convertUSDToToken(Settings::get('wheel_bonus_9', 1.4))],
-            [0.20, $currency->convertUSDToToken(Settings::get('wheel_bonus_10', 1.2))],
-            [0.05, $currency->convertUSDToToken(Settings::get('wheel_bonus_11', 1.1))]
+            [40, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_1', 1.00))],
+            [30, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_2', 1.10))],
+            [21, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_3', 0.5))],
+            [15, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_4', 0.5))],
+            [15, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_5', 0.6))],
+            [7, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_6', 0.8))],
+            [0.80, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_7', 0.95))],
+            [0.50, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_8', 1.5))],
+            [0.35, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_9', 1.4))],
+            [0.20, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_10', 1.2))],
+            [0.05, $currency->convertUSDToToken((float) Settings::get('wheel_bonus_11', 1.1))]
         ];
 
         $slice = 0;
@@ -148,34 +155,34 @@ class BonusController
 	{
 		$currency = Currency::find(Settings::get('bonus_currency'));
         $wheel = [
-            number_format(Settings::get('wheel_bonus_1'), 2, '.', ''),
-			number_format(Settings::get('wheel_bonus_2'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_3'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_4'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_5'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_6'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_7'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_8'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_9'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_10'), 2, '.', ''),
-            number_format(Settings::get('wheel_bonus_11'), 2, '.', '')
+            number_format((float) Settings::get('wheel_bonus_1'), 2, '.', ''),
+			number_format((float) Settings::get('wheel_bonus_2'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_3'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_4'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_5'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_6'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_7'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_8'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_9'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_10'), 2, '.', ''),
+            number_format((float) Settings::get('wheel_bonus_11'), 2, '.', '')
         ];
 		
         $partner = [
-			number_format(Settings::get('partner_bonus_1'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_2'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_3'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_4'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_5'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_6'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_7'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_8'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_9'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_10'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_11'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_12'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_13'), 2, '.', ''),
-            number_format(Settings::get('partner_bonus_14'), 2, '.', '')
+			number_format((float) Settings::get('partner_bonus_1'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_2'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_3'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_4'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_5'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_6'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_7'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_8'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_9'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_10'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_11'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_12'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_13'), 2, '.', ''),
+            number_format((float) Settings::get('partner_bonus_14'), 2, '.', '')
         ];
 		
         return APIResponse::success([
@@ -209,7 +216,7 @@ class BonusController
 		auth('sanctum')->user()->update([
 			'telegram_bonus' => true
 		]);
-		auth('sanctum')->user()->balance(Currency::find(Settings::get('bonus_currency')))->add((Settings::get('telegram_bonus') / Currency::find(Settings::get('bonus_currency'))->tokenPrice()), Transaction::builder()->message('Telegram bonus')->get());
+		auth('sanctum')->user()->balance(Currency::find(Settings::get('bonus_currency')))->add(((float) Settings::get('telegram_bonus') / Currency::find(Settings::get('bonus_currency'))->tokenPrice()), Transaction::builder()->message('Telegram bonus')->get());
 		return APIResponse::success();
 	}
 	

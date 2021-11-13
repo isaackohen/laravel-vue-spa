@@ -58,6 +58,9 @@
                                     })
                                 }
                             },
+							deleteInput(n) {
+								if(!this.value[n]) $(`.xmodal.tfa .inputs input:nth-child(${this.value.length})`).focus();
+							},
                             update() {
                                 for(let i = 0; i < 6; i++) $(`.xmodal.tfa .inputs input:nth-child(${i + 1})`).val(this.value[i] ? this.value[i] : '');
                             },
@@ -71,12 +74,12 @@
                                 <div class="tfad">{{ $t('general.profile.2fa_description') }}</div>
 
                                 <div class="inputs">
-                                    <input maxlength="2" @input="nextInput($event.target.value)" @click="clickInput(0)" :disabled="disabled">
-                                    <input maxlength="2" @input="nextInput($event.target.value)" @click="clickInput(1)" :disabled="disabled">
-                                    <input maxlength="2" @input="nextInput($event.target.value)" @click="clickInput(2)" :disabled="disabled">
-                                    <input maxlength="2" @input="nextInput($event.target.value)" @click="clickInput(3)" :disabled="disabled">
-                                    <input maxlength="2" @input="nextInput($event.target.value)" @click="clickInput(4)" :disabled="disabled">
-                                    <input maxlength="1" @input="nextInput($event.target.value)" @click="clickInput(5)" :disabled="disabled">
+                                    <input maxlength="2" @keyup.delete="deleteInput(0)" @input="nextInput($event.target.value)" @click="clickInput(0)" :disabled="disabled">
+                                    <input maxlength="2" @keyup.delete="deleteInput(1)" @input="nextInput($event.target.value)" @click="clickInput(1)" :disabled="disabled">
+                                    <input maxlength="2" @keyup.delete="deleteInput(2)" @input="nextInput($event.target.value)" @click="clickInput(2)" :disabled="disabled">
+                                    <input maxlength="2" @keyup.delete="deleteInput(3)" @input="nextInput($event.target.value)" @click="clickInput(3)" :disabled="disabled">
+                                    <input maxlength="2" @keyup.delete="deleteInput(4)" @input="nextInput($event.target.value)" @click="clickInput(4)" :disabled="disabled">
+                                    <input maxlength="1" @keyup.delete="deleteInput(5)" @input="nextInput($event.target.value)" @click="clickInput(5)" :disabled="disabled">
                                 </div>
 
                                 <div class="tfaStatus">{{ disabled ? '...' : $t('general.profile.2fa_digits', { 'digits': 6 - value.length  }) }}</div>

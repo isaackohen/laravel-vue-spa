@@ -13,7 +13,6 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center mt-3">
-                            <img :src="info.user.avatar" alt="" class="avatar-lg rounded-circle">
                             <h5 class="mt-2 mb-0">{{ info.user.name }}</h5>
                             <template v-if="info.user.name_history.length > 1">
                                 <h6 class="font-weight-normal mt-2 mb-0">Also known as:</h6>
@@ -37,12 +36,20 @@
                                             <td>{{ info.games }}</td>
                                         </tr>
                                         <tr>
+                                            <th scope="row">Netto Deposit & Withdraw</th>
+                                            <td>{{ (txstats.deposit_total - txstats.withdraw_total).toFixed(2) }}$</td>
+                                        </tr>
+                                        <tr>
                                             <th scope="row">Register IP</th>
                                             <td>{{ info.user.register_ip }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Latest login IP</th>
                                             <td>{{ info.user.login_ip }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Free Spins</th>
+                                            <td>{{ info.user.freespins }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Created at</th>
@@ -117,6 +124,37 @@
                             </tbody>
                         </table>
                         <hr>
+                        <table id="txstats" class="table dt-responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Promocode Gain ($)</th>
+                                    <th>Weekly Bonus</th>
+                                    <th>Freespins Used</th>
+                                    <th>Faucet Gain</th>
+                                    <th>Challenges Gain</th>
+                                    <th>Deposit Bonus</th>
+                                    <th>Deposits (Total $)</th>
+                                    <th>Deposits (Total Times)</th>
+                                    <th>Withdraws (Total $)</th>
+                                    <th>Withdraws (Total Times)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ txstats.promocode }}</td>
+                                    <td>{{ txstats.weeklybonus }}</td>
+                                    <td>{{ txstats.freespins_amount }}</td>
+                                    <td>{{ txstats.faucet }}</td>
+                                    <td>{{ txstats.challenges }}</td>
+                                    <td>{{ txstats.depositbonus }}</td>
+                                    <td>{{ txstats.deposit_total }}</td>
+                                    <td>{{ txstats.deposit_count }}</td>
+                                    <td>{{ txstats.withdraw_count }}</td>
+                                    <td>{{ txstats.withdraw_total }}</td>
+                                </tr>
+                            </tbody>
+                        </table>                    
+                        <hr>
                         <table id="datatable" class="table dt-responsive nowrap">
                             <thead>
                                 <tr>
@@ -184,6 +222,7 @@
         data() {
             return {
                 info: null,
+                txstats: null,
                 userAccess: null
             }
         },
@@ -218,7 +257,6 @@
         created() {
             axios.post('/admin/user', { id: this.$route.params.id }).then(({ data }) => {
                 this.info = data;
-
                 this.userAccess = this.info.user.access;
 
                 setTimeout(() => {
@@ -251,6 +289,26 @@
                     });
                 }, 100);
             });
+            axios.post('/admin/txstats', { id: this.$route.params.id }).then(({ data }) => {
+                this.txstats = data;
+                setTimeout(() => {
+                    $('#txstats').DataTable({
+                        destroy: true,
+                        "order": [[0, "desc"]],
+                        "language": {
+                            "paginate": {
+                                "previous": "< ",
+                                "next": " >"
+                            }
+                        },
+                        "drawCallback": function() {
+                            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+                        }
+                    });
+                }, 100);
+
+                });
+
         }
     }
 </script>

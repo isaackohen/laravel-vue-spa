@@ -17,6 +17,10 @@ class BitcoinCash extends NowPaymentsSupport {
     public function alias(): string {
         return 'bitcoin-cash';
     }
+    
+    public function conversionID(): string {
+        return 'bitcoin-cash';
+    }
 
     public function displayName(): string {
         return "Bitcoin Cash";

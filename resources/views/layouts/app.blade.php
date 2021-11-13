@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ \App\Settings::where('name', 'platform_name')->first()->value }}</title>
+        <title>Mega Casino</title>
         <script src="https://kit.fontawesome.com/23f13eab24.js" crossorigin="anonymous"></script>
 
 
@@ -23,7 +23,14 @@
 
         <link rel="icon" href="{{ asset('/favicon.svg') }}">
         <link rel="manifest" href="/manifest.json">
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HD823C6YCY"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
 
+		  gtag('config', 'G-HD823C6YCY');
+		</script>
 		
         <script type="text/javascript">
             window.Layout = {

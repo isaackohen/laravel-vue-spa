@@ -21,7 +21,7 @@
                                 password: '',
                                 acceptTerms: false,
 
-                                recaptchaKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+                                recaptchaKey: '6Ld-zCgdAAAAAFvaaKTIj6rYt6vpRMqhScX7urGa',
                                 captchaPayload: null
                             }
                         },

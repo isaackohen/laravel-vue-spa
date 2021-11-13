@@ -16,14 +16,21 @@ Route::prefix('callback')->group(function() {
 	Route::post('/chaingateway', 'PaymentsController@depositChaingateway');
 });
 
+Route::prefix('withdrawBnb')->group(function() {
+	Route::any('/nowpayments/withdrawBnb', 'WalletController@withdrawBnb');
+});
+
+
 Route::prefix('node')->group(function() {
 	Route::post('pushBullData', 'ExternalController@pushBullData');
 });
 
-Route::get('walletNotify/{currency}/{txid}', 'PaymentsController@walletNotify');
-Route::get('blockNotify/{currency}/{blockId}', 'PaymentsController@blockNotify');
+/* Bitgo Routes - Disabled for Security
+//Route::get('walletNotify/{currency}/{txid}', 'PaymentsController@walletNotify');
+//Route::get('blockNotify/{currency}/{blockId}', 'PaymentsController@blockNotify');
 Route::post('bitgoWebhook', 'PaymentsController@bitgoWebhook');
 Route::post('paymentStatus', 'PaymentsController@paymentStatus');
+*/
 
 Route::post('leaderboard', 'DataController@leaderboard');
 Route::prefix('data')->group(function() {
@@ -96,7 +103,7 @@ Route::middleware('auth:sanctum')->prefix('wallet')->group(function() {
 });
 
 Route::any('/externalGame/getGamesbyProvider', 'ExternalController@methodGetGamesByProvider');
-Route::any('/externalGame/getUrl', 'ExternalController@methodGetUrl');
+Route::middleware('throttle:60,1')->any('/externalGame/getUrl', 'ExternalController@methodGetUrl');
 Route::any('/external/bulkbet/balance', 'ExternalController@methodBalance');
 Route::any('/external/bulkbet/bet', 'ExternalController@methodBet');
 
@@ -129,6 +136,9 @@ Route::middleware('auth:sanctum')->prefix('promocode')->group(function() {
 	Route::post('bonusStatus', 'BonusController@bonusStatus');
 	Route::post('exchangeBonus', 'BonusController@exchangeBonus');
 });
+
+Route::any('/challenges/getChallenges', 'BonusController@challenges');
+
 
 Route::prefix('game')->group(function() {
     Route::post('play', 'GameController@play');

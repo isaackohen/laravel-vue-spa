@@ -18,6 +18,10 @@ class Bitcoin extends NowPaymentsSupport {
         return "bitcoin";
     }
 
+    public function conversionID(): string {
+        return 'bitcoin';
+    }
+    
     public function displayName(): string {
         return "Bitcoin";
     }

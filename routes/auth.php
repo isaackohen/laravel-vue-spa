@@ -34,7 +34,7 @@ if(!function_exists('createUser')) {
             $referrer = User::where('name', $_COOKIE['c'])->first();
             if ($referrer != null) {
                 $user->update(['referral' => $referrer->_id]);
-                $user->balance(Currency::all()[0])->add(floatval(Currency::all()[0]->option('referral_bonus')));
+                //$user->balance(Currency::all()[0])->add(floatval(Currency::all()[0]->option('referral_bonus')));
             }
         }
 

@@ -22,6 +22,8 @@ abstract class Currency {
 
     abstract function alias(): string;
 
+    abstract function conversionID(): string;
+
     abstract function displayName(): string;
 
     abstract function style(): string;
@@ -36,9 +38,9 @@ abstract class Currency {
 
     public function tokenPrice() {
         try {
-            if (!Cache::has('conversions:' . $this->alias()))
-                Cache::put('conversions:' . $this->alias(), file_get_contents("https://api.coingecko.com/api/v3/coins/{$this->alias()}?localization=false&market_data=true"), now()->addHours(1));
-            $json = json_decode(Cache::get('conversions:' . $this->alias()));
+            if (!Cache::has('conversions:' . $this->conversionID()))
+                Cache::put('conversions:' . $this->conversionID(), file_get_contents("https://api.coingecko.com/api/v3/coins/{$this->conversionID()}?localization=false&market_data=true"), now()->addHours(1));
+            $json = json_decode(Cache::get('conversions:' . $this->conversionID()));
             return $json->market_data->current_price->usd;
         } catch (\Exception $e) {
 			try{
@@ -131,71 +133,17 @@ abstract class Currency {
                 function name(): string {
                     return "Withdrawal manually if balance including total withdrawal amount is higher than";
                 }
-            },
-			new class extends WalletOption {
-                function id() {
-                    return "min_tip";
-                }
-
-                function name(): string {
-                    return "Minimum Tip Amount";
-                }
-            },
-			new class extends WalletOption {
-                function id() {
-                    return "min_rain";
-                }
-
-                function name(): string {
-                    return "Minimum Rain Amount";
-                }
-            },
-			new class extends WalletOption {
-                function id() {
-                    return "min_bet";
-                }
-
-                function name(): string {
-                    return "Min. bet";
-                }
-            },
-			new class extends WalletOption {
-                function id() {
-                    return "max_bet";
-                }
-
-                function name(): string {
-                    return "Max. bet";
-                }
-            },            
-			new class extends WalletOption {
-                public function id() {
-                    return 'quiz';
-                }
-
-                public function name(): string {
-                    return 'Quiz answer reward';
-                }
-            },
-			new class extends WalletOption {
-                function id() {
-                    return 'high_roller_requirement';
-                }
-
-                function name(): string {
-                    return '"High Rollers" tab min bet amount';
-                }
-            },
+            }
         ]);
     }
 
     public function option(string $key, string $value = null): string {
         if($value == null) {
             if(Cache::has('currency:'.$this->walletId().':'.$key)) return json_decode(Cache::get('currency:'.$this->walletId().':'.$key), true)[$key] ?? '1';
-            return \App\Currency::where('currency', $this->walletId())->first()->data[$key] ?? '1';
-        }
-
-        $data = \App\Currency::where('currency', $this->walletId())->first();
+			return \App\Currency::where('currency', $this->walletId())->first()->data[$key] ?? '1';
+        } 
+		
+		$data = \App\Currency::where('currency', $this->walletId())->first();
 
         if(!$data) $data = \App\Currency::create(['currency' => $this->walletId(), 'data' => []]);
 
@@ -209,6 +157,8 @@ abstract class Currency {
         Cache::forget('currency:'.$this->walletId().':'.$key);
         Cache::put('currency:'.$this->walletId().':'.$key, json_encode($data), now()->addYear());
         return $value;
+		
+		
     }
 
     abstract function isRunning(): bool;
@@ -231,10 +181,13 @@ abstract class Currency {
 
     abstract function hotWalletBalance(): float;
 
-    public static function toCurrencyArray(array $array) {
+    public static function toCurrencyArray(array $array, $all = false) {
         $currency = [];
+		$fdb = auth('sanctum')->guest() ? null : auth('sanctum')->user()->first_deposit_bonus ?? null;
         foreach($array as $c) {
-			if((!auth('sanctum')->user()->first_deposit_bonus) && ($c->id() === 'local_bonus')) continue;
+			if(auth('sanctum')->guest() ? null : auth('sanctum')->user()->access !== 'admin') {
+				if((!$fdb) && ($c->id() === 'local_bonus')) continue;
+			}
 			$currency = array_merge($currency, [
 				$c->id() => [
 					'id' => $c->id(),
@@ -246,9 +199,9 @@ abstract class Currency {
 					'price' => $c->tokenPrice(),
 					'withdrawFee' => floatval($c->option('fee')),
 					'minimalWithdraw' => floatval($c->option('withdraw')),
-					'highRollerRequirement' => floatval($c->option('high_roller_requirement')),
-					'min_bet' => floatval($c->option('min_bet')),
-					'max_bet' => floatval($c->option('max_bet')),
+					'highRollerRequirement' => floatval(Settings::get('high_roller_requirement') / $c->tokenPrice()),
+					'min_bet' => floatval(Settings::get('min_bet') / $c->tokenPrice()),
+					'max_bet' => floatval(Settings::get('max_bet') / $c->tokenPrice()),
 					'balance' => [
 						'real' => auth('sanctum')->guest() ? null : auth('sanctum')->user()->balance($c)->get(),
 						'demo' => auth('sanctum')->guest() ? null : auth('sanctum')->user()->balance($c)->demo(true)->get()
@@ -263,8 +216,8 @@ abstract class Currency {
 							5 => floatval(Settings::get('vip_gold_usd'))
 						]
 				],
-				'vipClosest' => Currency::find('np_eth')->name(),
-				'vipClosestId' => Currency::find('np_eth')->id(),
+				'vipClosest' => Currency::find(Settings::get('bonus_currency'))->name(),
+				'vipClosestId' => Currency::find(Settings::get('bonus_currency'))->id(),
 				'vipClosestWager' => auth('sanctum')->guest() ? 0 : (Statistics::where('user', auth('sanctum')->user()->_id)->first()->data['usd_wager'] ?? 0)
 			]);
 		}
@@ -274,40 +227,43 @@ abstract class Currency {
 
     public static function getAllSupportedCoins(): array {
         return [
-            new Local\Rub(),
-            new Local\Usd(),
+            //new Local\Rub(),
+            //new Local\Usd(),
 			new Local\Bonus(),
-			new Native\Bitcoin(),
-            new Native\Ethereum(),
-            new Native\Litecoin(),
-            new Native\Dogecoin(),
-            new Native\Litecoin(),
-            new Native\BitcoinCash(),
+			//new Native\Bitcoin(),
+            //new Native\Ethereum(),
+            //new Native\Litecoin(),
+            //new Native\Dogecoin(),
+            //new Native\Litecoin(),
+            //new Native\BitcoinCash(),
+            new NowPayments\BNB(),
 			new NowPayments\Bitcoin(),
             new NowPayments\Ethereum(),
+            new NowPayments\Cake(),
+            new NowPayments\BUSD(),
             new NowPayments\Litecoin(),
-            new NowPayments\Dogecoin(),
+            //new NowPayments\Dogecoin(),
             new NowPayments\Litecoin(),
-            new NowPayments\BitcoinCash(),
-			new NowPayments\Tron(),
-			new СhainGateway\BNB(),
-			new СhainGateway\BUSD(),
-			new СhainGateway\Pirate(),
-            new BitGo\Bitcoin(),
-            new BitGo\BitcoinCash(),
-            new BitGo\BitcoinGold(),
-            new BitGo\WrappedBitcoin(),
-            new BitGo\Algorand(),
-            new BitGo\Celo(),
-            new BitGo\Dash(),
-            new BitGo\EOS(),
-            new BitGo\Ethereum(),
-            new BitGo\Litecoin(),
-            new BitGo\Ripple(),
-            new BitGo\Stellar(),
-            new BitGo\Tezos(),
-            new BitGo\Tron(),
-            new BitGo\ZCash()
+            //new NowPayments\BitcoinCash(),
+			//new NowPayments\Tron(),
+			//new СhainGateway\BNB(),
+			//new СhainGateway\BUSD(),
+			new СhainGateway\Pirate()
+            //new BitGo\Bitcoin(),
+            //new BitGo\BitcoinCash(),
+            //new BitGo\BitcoinGold(),
+            //new BitGo\WrappedBitcoin(),
+            //new BitGo\Algorand(),
+            //new BitGo\Celo(),
+            //new BitGo\Dash(),
+            //new BitGo\EOS(),
+            //new BitGo\Ethereum(),
+            //new BitGo\Litecoin(),
+            //new BitGo\Ripple(),
+            //new BitGo\Stellar(),
+            //new BitGo\Tezos(),
+            //new BitGo\Tron(),
+            //new BitGo\ZCash()
         ];
     }
 

@@ -51,7 +51,7 @@
 					<div class="exchangeResult">
 						{{ usd ? '$' : ''}} {{ parseFloat(sum).toFixed(usd ? 2 : 8) }} <icon :icon="exchangeSend.icon" :style="{ color: exchangeSend.style }"></icon><strong>=</strong> {{ usd ? '$' : ''}} {{ predictExchangeResult() }} <icon :icon="exchangeReceive.icon" :style="{ color: exchangeReceive.style }"></icon>
 					</div>
-					<div class="btn btn-primary btn-block" @click="exchange" :disabled="exchanging">{{ $t('wallet.exchange') }}</div>
+                    <div class="btn btn-primary btn-block  disabled">COMING SOON</div>
 				</template>
             </div>
             <div class="walletTabContent" v-else-if="tab === 'deposit'">
@@ -697,7 +697,8 @@
                 flex-wrap: wrap;
 
                 .aggregator.active {
-                    border: 1px solid t('secondary');
+                    border-left: 3px solid t('secondary');
+                    background: t('secondary-alternative');
                 }
 
                 .aggregator {
@@ -917,10 +918,10 @@
                     justify-content: center;
                     padding: 15px;
                     text-align: center;
-                    background: lighten(t('sidebar'), 3.33%);
+                    background: darken(t('secondary-alternative'), 1%);
                     border-bottom: 2px solid transparent;
                     color: rgba(t('text'), 0.7);
-                    transition: border-bottom-color 0.3s ease, color 0.3s ease;
+                    transition: all 0.3s ease;
                     cursor: pointer;
 
                     &:hover {
@@ -934,6 +935,7 @@
                 }
 
                 .walletTab.active {
+                    background: darken(t('body'), 4%);
                     color: t('text');
                     border-bottom-color: t('secondary');
                 }
@@ -1032,7 +1034,7 @@
             .walletOut {
                 padding: 20px;
                 border-radius: 3px;
-                border: 2px solid t('secondary');
+                border: 2px solid t('secondary-alternative');
                 margin-top: 25px;
                 margin-bottom: 25px;
                 text-align: center;
@@ -1055,9 +1057,13 @@
                     text-transform: uppercase;
                 }
             }
+
+            .deposit-bonus {
+                border: 2px solid t('secondary');
+            }
 			
 			.walletOut.deposit-bonus .btn {
-				width: 25% !important;
+				width: 100% !important;
 				padding: 10px !important;
 			}
 
@@ -1070,9 +1076,8 @@
                 }
 
                 .paymentMethod {
-                    border-radius: 3px;
-                    border: 1px solid rgba(t('text'), 0.05);
-                    transition: border-color 0.3s ease;
+                    border-left: 3px solid darken(t('secondary-alternative'), 5.5%);
+                    transition: all 0.3s ease;
                     display: flex;
                     flex-direction: row;
                     align-content: center;
@@ -1084,8 +1089,10 @@
                     }
 
                     .icon {
-                        padding: 10px 15px;
-                        background: rgba(t('text'), 0.05);
+                        border-top-right-radius: 7px;
+                        border-bottom-right-radius: 7px;
+                        padding: 8px 12px;
+                        background: t('secondary-alternative');
                         transition: background 0.3s ease;
                     }
 
@@ -1094,17 +1101,19 @@
                     }
 
                     &:hover {
-                        border-color: rgba(t('text'), 0.1);
+                        border-left: 3px solid t('secondary');
+                        background: t('secondary-alternative');
                         .icon {
-                            background: rgba(t('text'), 0.1);
+                            background: darken(t('secondary-alternative'), 0.5%);
                         }
                     }
                 }
 
                 .paymentMethod.active {
-                    border-color: t('secondary');
+                    border-left: 3px solid t('secondary');
+                    background: darken(t('secondary-alternative'), 0.5%);
                     .icon {
-                        background: rgba(t('text'), 0.1);
+                        background: darken(t('secondary-alternative'), 5.5%);
                     }
                 }
             }

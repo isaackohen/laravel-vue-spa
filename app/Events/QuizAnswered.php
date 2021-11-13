@@ -1,5 +1,6 @@
 <?php namespace App\Events;
 
+use App\Settings;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -34,7 +35,7 @@ class QuizAnswered implements ShouldBroadcastNow {
             'question' => $this->question,
             'correct' => $this->correct,
             'currency' => $this->user->clientCurrency()->id(),
-            'reward' => floatval($this->user->clientCurrency()->option('quiz'))
+            'reward' => floatval(Settings::get('quiz') / $this->user->clientCurrency()->tokenPrice())
         ];
     }
 

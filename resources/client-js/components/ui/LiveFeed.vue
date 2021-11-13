@@ -10,13 +10,9 @@
                     <div class="tabs">
                         <div v-if="!isGuest" @click="$store.dispatch('setLiveChannel', 'mine')" :class="`tab ${liveChannel === 'mine' ? 'active' : ''}`">{{ $t('general.bets.mine') }}</div>
                         <div @click="$store.dispatch('setLiveChannel', 'all')" :class="`tab ${liveChannel === 'all' ? 'active' : ''}`">{{ $t('general.bets.all') }}</div>
-                        <div @click="$store.dispatch('setLiveChannel', 'high_rollers')" :class="`tab ${liveChannel === 'high_rollers' ? 'active' : ''}`">{{ $t('general.bets.high_rollers') }}</div>
-                        <div @click="$store.dispatch('setLiveChannel', 'lucky_wins')" :class="`tab ${liveChannel === 'lucky_wins' ? 'active' : ''}`">{{ $t('general.bets.lucky_wins') }}</div>
+                        <div @click="$store.dispatch('setLiveChannel', 'high_rollers')" :class="`tab ${liveChannel === 'high_rollers' ? 'active' : 'highrollers_tab'}`">{{ $t('general.bets.high_rollers') }}</div>
+                        <div @click="$store.dispatch('setLiveChannel', 'lucky_wins')" :class="`tab ${liveChannel === 'lucky_wins' ? 'active' : 'luckywinners_tab'}`">{{ $t('general.bets.lucky_wins') }}</div>
                     </div>
-                    <select @change="$store.dispatch('setLiveFeedEntryCount', parseFloat(liveFeedEntriesWrap))" v-model="liveFeedEntriesWrap">
-                        <option value="10" :selected="liveFeedEntries === 10">10</option>
-                        <option value="25" :selected="liveFeedEntries === 25">25</option>
-                    </select>
                 </div>
             </div>
             <div class="live_table_container">
@@ -35,11 +31,11 @@
                         <tr v-for="game in lastGames">
                             <th>
                                 <div class="gameIcon">
-                                    <router-link :to="`/game/${game.metadata.id}`" tag="div" class="icon d-none d-md-inline-block">
+                                    <router-link :to="`${game.game.type === 'external' ? (`/casino/` + game.metadata.id) : (`/game/` + game.metadata.id)}`" tag="div" class="icon d-none d-md-inline-block">
                                         <icon :icon="game.metadata.icon"></icon>
                                     </router-link>
                                     <div class="name">
-                                        <div><router-link :to="`/game/${game.metadata.id}`">{{ game.metadata.name }}</router-link></div>
+                                        <div><router-link :to="`${game.game.type === 'external' ? (`/casino/` + game.metadata.id) : (`/game/` + game.metadata.id)}`">{{ game.metadata.name }}</router-link></div>
                                         <a href="javascript:void(0)" @click="openOverviewModal(game.game._id, game.game.game)">{{ $t('general.overview') }}</a>
                                     </div>
                                 </div>
@@ -128,3 +124,27 @@
         }
     }
 </script>
+
+
+<style lang="scss">
+        @import "resources/sass/variables";
+
+    .luckywinners_tab {
+        opacity: 1;
+    }
+
+    .highrollers_tab {
+        opacity: 1;
+    }
+        @include media_breakpoint_down(md) {
+
+    .luckywinners_tab {
+        opacity: 0;
+    }
+
+    .highrollers_tab {
+        opacity: 0;
+    }
+
+    }
+</style>

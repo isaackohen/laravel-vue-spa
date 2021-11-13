@@ -21,6 +21,9 @@ import VueCountdown from '@chenfengyuan/vue-countdown';
 import VTooltip from 'v-tooltip';
 import VueContext from 'vue-context';
 import VueSlimScroll from 'vue-slimscroll';
+import Unicon from 'vue-unicons/dist/vue-unicons-vue2.umd';
+import { uniTrashAlt } from 'vue-unicons/dist/icons';
+import { uniCog } from 'vue-unicons/dist/icons';
 
 import VueContentPlaceholders from 'vue-content-placeholders';
 import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
@@ -42,6 +45,9 @@ Vue.use(infiniteScroll);
 Vue.use(ToggleButton);
 Vue.use(VTooltip);
 Vue.use(VueSlimScroll);
+Unicon.add([uniTrashAlt]);
+Unicon.add([uniCog]);
+Vue.use(Unicon);
 
 Vue.component(VueCountdown.name, VueCountdown);
 Vue.component('vue-context', VueContext);

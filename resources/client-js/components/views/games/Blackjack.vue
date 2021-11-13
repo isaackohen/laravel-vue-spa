@@ -500,7 +500,7 @@
                         speed = 500;
 
                         $(`${ele} .card-${i}`).attr('id', 'pcard-' + i);
-                        if (hand.length < 2) setTimeout(() => this.player.getScore((response) => $('.player').html(response).fadeIn('fast')), 500);
+                        if (hand.length < 2) setTimeout(() => this.player.getScore((response) => $('.blackjack_score.player').html(response).fadeIn('fast')), 500);
                     } else if(ele === '#shand') {
                         posy = 120;
                         speed = 500;

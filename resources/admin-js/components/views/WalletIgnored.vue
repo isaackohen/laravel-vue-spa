@@ -32,7 +32,6 @@
                                 <div class="card" :style="withdraw.user.vipLevel === 5 ? 'border: 1px solid #00fffb' : ''">
                                     <div class="card-body p-3">
                                         <div class="media">
-                                            <img :src="withdraw.user.avatar" class="mr-3 avatar-lg rounded">
                                             <div class="media-body">
                                                 <button class="btn btn-primary btn-sm" @click="unignoreWithdraw(withdraw.withdraw._id)" style="position: absolute; right: 15px;">-</button>
                                                 <h5 class="mt-1 mb-0">{{ withdraw.user.name }}</h5>

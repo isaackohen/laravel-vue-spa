@@ -79,7 +79,7 @@ class ChatController
 	{
 		$user = User::where('name', 'like', str_replace('.', '', $request->user).'%')->first();
         if($user == null || $user->name === auth('sanctum')->user()->name) return APIResponse::reject(1);
-        if(floatval($request->amount) < floatval(auth('sanctum')->user()->clientCurrency()->option('min_tip')) || auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->get() < floatval($request->amount)) return APIResponse::reject(2);
+        if(floatval($request->amount) < floatval(Settings::get('min_tip') / auth('sanctum')->user()->clientCurrency()->tokenPrice()) || auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->get() < floatval($request->amount)) return APIResponse::reject(2);
         auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->subtract(floatval($request->amount), Transaction::builder()->message('Tip to '.$user->_id)->get());
         $user->balance(auth('sanctum')->user()->clientCurrency())->add(floatval($request->amount), Transaction::builder()->message('Tip from '.auth('sanctum')->user()->_id)->get());
         $user->notify(new \App\Notifications\TipNotification(auth('sanctum')->user(), auth('sanctum')->user()->clientCurrency(), number_format(floatval($request->amount), 8, '.', '')));
@@ -105,7 +105,7 @@ class ChatController
 	{
 		$usersLength = intval($request->users);
         if($usersLength < 5 || $usersLength > 25) return APIResponse::reject(1, 'Invalid users length');
-        if(auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->get() < floatval($request->amount) || floatval($request->amount) < floatval(auth('sanctum')->user()->clientCurrency()->option('min_rain')) / 3) return APIResponse::reject(2);
+        if(auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->get() < floatval($request->amount) || floatval($request->amount) < floatval(Settings::get('min_rain') / auth('sanctum')->user()->clientCurrency()->tokenPrice()) / 3) return APIResponse::reject(2);
         auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->subtract(floatval($request->amount), Transaction::builder()->message('Rain')->get());
 
         $all = \App\ActivityLog\ActivityLogEntry::onlineUsers()->toArray();
@@ -180,15 +180,15 @@ class ChatController
     public function send(Request $request)
     {
         $last3Hours = \Carbon\Carbon::now()->subMinutes(10);
-        $user = User::where('_id', auth()->user()->id)->first();
+        $user = User::where('_id', auth('sanctum')->user()->id)->first();
         if(strlen($request->message) < 1 || strlen($request->message) > 100) return reject(1, 'Message is too short or long');
-        if(auth()->user()->mute != null && !auth()->user()->mute->isPast()) return reject(2, 'User is banned');
+        if(auth('sanctum')->user()->mute != null && !auth('sanctum')->user()->mute->isPast()) return reject(2, 'User is banned');
         if($user->created_at >= $last3Hours) return reject(2, 'User is banned');
 
         $message = Chat::create([
-            'user' => auth()->user()->toArray(),
-            'user_id' => auth()->user()->_id,
-            'vipLevel' => auth()->user()->vipLevel(),
+            'user' => auth('sanctum')->user()->toArray(),
+            'user_id' => auth('sanctum')->user()->_id,
+            'vipLevel' => auth('sanctum')->user()->vipLevel(),
             'data' => mb_substr($request->message, 0, 400),
             'type' => 'message',
             'channel' => $request->channel
@@ -203,8 +203,8 @@ class ChatController
 
             if($sanitize($request->message) === $sanitize(Settings::get('quiz_answer'))) {
                 Settings::set('quiz_active', false);
-                auth()->user()->balance(auth()->user()->clientCurrency())->add(floatval(auth()->user()->clientCurrency()->option('quiz')), Transaction::builder()->message('Quiz')->get());
-                event(new \App\Events\QuizAnswered(auth()->user(), Settings::get('quiz_question'), Settings::get('quiz_answer')));
+                auth('sanctum')->user()->balance(auth('sanctum')->user()->clientCurrency())->add(floatval(Settings::get('quiz') / auth('sanctum')->user->clientCurrency()->tokenPrice()), Transaction::builder()->message('Quiz')->get());
+                event(new \App\Events\QuizAnswered(auth('sanctum')->user(), Settings::get('quiz_question'), Settings::get('quiz_answer')));
             }
         }
 		
@@ -214,13 +214,13 @@ class ChatController
 	public function sticker(Request $request)
     {
         $last3Hours = Carbon::now()->subMinutes(10);
-        $user = User::where('_id', auth()->user()->id)->first();
-        if(auth()->user()->mute != null && !auth()->user()->mute->isPast()) return reject(2, 'User is banned');
+        $user = User::where('_id', auth('sanctum')->user()->id)->first();
+        if(auth('sanctum')->user()->mute != null && !auth('sanctum')->user()->mute->isPast()) return reject(2, 'User is banned');
         if($user->created_at >= $last3Hours) return reject(2, 'User is banned');
 
         $message = Chat::create([
-            'user' => auth()->user()->toArray(),
-            'vipLevel' => auth()->user()->vipLevel(),
+            'user' => auth('sanctum')->user()->toArray(),
+            'vipLevel' => auth('sanctum')->user()->vipLevel(),
             'data' => $request->url,
             'type' => 'gif',
             'channel' => $request->channel

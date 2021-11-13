@@ -38,7 +38,7 @@
                     </router-link>
 
 
-                <router-link to="/game/subcategory/inhouse" class="game" @click.native="gamesWindow = false">
+                <router-link to="/game/category/inhouse" class="game" @click.native="gamesWindow = false">
                     <div class="icon"><i class="fas fa-acorn"></i></div>
                     <div class="name letter-spacing">{{ $t('general.sidebar.inhouse') }}</div>
                 </router-link>
@@ -53,10 +53,16 @@
                     <div class="name letter-spacing">{{ $t('general.sidebar.live') }}</div>
                 </router-link>
 
-                <router-link to="/game/subcategory/vs" class="game" @click.native="gamesWindow = false">
-                    <div class="icon"><i class="fak fa-virtualsport-pingpong"></i></div>
-                    <div class="name letter-spacing">{{ $t('general.sidebar.vs') }}</div>
-                </router-link>
+                <router-link to="/providers" class="game" @click.native="gamesWindow = false">
+                    <div class="icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="name letter-spacing">{{ $t('general.sidebar.providers') }}</div>
+                </router-link>  
+
+                <router-link to="/browse" class="game" @click.native="gamesWindow = false">
+                    <div class="icon"><i class="fas fa-th-large"></i></div>
+                    <div class="name letter-spacing">{{ $t('general.sidebar.all') }}</div>
+                </router-link>  
+
 
 
 

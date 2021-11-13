@@ -16,6 +16,8 @@ const routes = [
     { path: '/game/subcategory/:category', component: require('./components/views/GameSubCategory.vue').default },
 	{ path: '/game/namecategory/:category', component: require('./components/views/GameNameCategory.vue').default },
 	{ path: '/browse', component: require('./components/views/Browse.vue').default },
+    { path: '/challenges', component: require('./components/views/Challenges.vue').default },
+
 	{ path: '/providers', component: require('./components/views/Providers.vue').default },
     { path: '/game/:id', component: require('./components/views/Game.vue').default, prop: true },
     { path: '/casino/:id', component: require('./components/views/CasinoGame.vue').default, prop: true },

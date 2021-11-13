@@ -5,6 +5,7 @@ use App\Settings;
 use App\Utils\APIResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
 {
@@ -12,7 +13,7 @@ class SettingsController extends Controller
     public function get()
     {
         return APIResponse::success([
-            'mutable' => Settings::where('internal', '!=', true)->where('hidden', '!=', true)->where('cat', '=', null)->get()->toArray(),
+            'mutable' => Settings::where('internal', '!=', true)->where('hidden', '!=', true)->orWhere('cat', '=', null)->orWhere('cat', 'general')->get()->toArray(),
             'immutable' => Settings::where('internal', true)->where('hidden', '!=', true)->where('cat', '=', null)->get()->toArray(),
 			'bonus' => Settings::where('internal', '!=', true)->where('cat', 'bonus')->where('hidden', '!=', true)->get()->toArray(),
 			'global' => [
@@ -62,7 +63,16 @@ class SettingsController extends Controller
 	
 	public function create(Request $request)
     {
-        Settings::create(['name' => request('key'), 'cat' => request('cat'), 'description' => request('description'), 'value' => null]);
+        Settings::create(
+			[
+				'name' => request('key'), 
+				'cat' => request('cat'), 
+				'description' => request('description'), 
+				'hidden' => false,
+				'internal' => false,
+				'value' => null
+			]
+		);
         return APIResponse::success();
 	}
 	
@@ -71,6 +81,7 @@ class SettingsController extends Controller
         Settings::where('name', request('key'))->first()->update([
             'value' => request('value') === 'null' ? null : request('value')
         ]);
+		Cache::forget('settings:'.request('key'));
         return APIResponse::success();
 	}
 	

@@ -28,14 +28,14 @@
                                     </div>
                                 </div>
                             </overlay-scrollbars>
-							<div class="option mt-2" @click="$store.commit('setUsd', !usd)">
+							<!-- <div class="option mt-2" @click="$store.commit('setUsd', !usd)">
                                 <div class="wallet-switcher-icon">
                                     <i :class="usd ? 'fas fa-check-square' : 'far fa-square'"></i>
                                 </div>
                                 <div class="wallet-switcher-content">
                                     {{ $t('general.head.view_usd') }}
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="btn btn-secondary icon" @click="expand = !expand">
                             <icon :icon="currencies[currency].icon" v-if="currencies[currency]" :style="{ color: currencies[currency].style }"></icon>
@@ -50,18 +50,18 @@
                                 </span>
                             </transition-group>
                         </div>
-                        <div class="btn btn-primary wallet-open" @click="demo ? openDemoBalanceModal() : ((currency === 'local_bonus') ? openBonusBalanceModal() : $router.push('/wallet'))">{{ demo ? $t('general.head.wallet_open_demo') : ((currency === 'local_bonus') ? $t('wallet.exchange') : $t('general.head.wallet')) }}</div>
+                        <div class="btn btn-primary wallet-open" @click="demo ? openDemoBalanceModal() : ((currency === 'local_bonus') ? openBonusBalanceModal() : $router.push('/wallet'))">{{ demo ? $t('general.head.wallet_open_demo') : ((currency === 'local_bonus') ? $t('wallet.exchange') : $t('general.head.wallet')) }} <i class="far fa-plus" style="margin-left: 5px;font-size: 13px;font-weight: 300;" aria-hidden="true"></i></div>
                     </div>
                     <div v-if="isGuest" :class="`right ${isGuest ? 'ml-auto' : ''}`">
-                        <button class="btn btn-transparent" @click="openAuthModal('auth')">{{ $t('general.auth.login') }}</button>
-                        <button class="btn btn-primary" @click="openAuthModal('register')">{{ $t('general.auth.register') }}</button>
+                        <button class="btn btn-secondary" @click="openAuthModal('auth')">{{ $t('general.auth.login') }}</button>
+                        <button style="margin-left:  5px;" class="btn btn-primary" @click="openAuthModal('register')">{{ $t('general.auth.register') }}</button>
                     </div>
                     <div v-else :class="`right ${isGuest ? 'ml-auto' : ''}`">
-                        <div class="action" @click="openRankingsModal()">
+                        <div id="leaderboard-action" class="action" @click="openRankingsModal()">
                             <i class="fas fa-trophy-alt"></i>
                         </div>
                         <div class="action" data-notification-view @click="displayNotifications()">
-                            <i class="fas fa-bell"></i>
+                            <i class="fas fa-concierge-bell"></i>
                         </div>
                         <router-link tag="img" :to="`/profile/${user.user._id}`" :src="user.user.avatar"></router-link>
                     </div>
@@ -193,19 +193,19 @@
                 backdrop-filter: blur(20px);
 
                 .logo {
-                    width: 63px;
+                    width: 90px;
                     height: 47px;
                     margin-left: 5px;
                     display: flex;
                     cursor: pointer;
                     background: t('logo') no-repeat center;
-                    background-size: cover;
+                    background-size: contain;
                 }
             }
 
             .menu {
                 position: absolute;
-                left: 130px;
+                left: 145px;
                 display: flex;
 
                 @include themed() {
@@ -310,6 +310,9 @@
 
     @media(max-width: 991px) {
         header .sidebar-switch {
+            display: none;
+        }
+        #leaderboard-action {
             display: none;
         }
     }

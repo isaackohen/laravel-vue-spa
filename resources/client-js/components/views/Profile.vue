@@ -11,8 +11,8 @@
                         {{ profile.user.name }}
                     </div>
                 </div>
-                <div class="profileMenuContainer">
-                    <div class="profileMenu os-host-flexbox w-100">
+                <div class="profileMenuContainer pc">
+                    <div class="profileMenu pc os-host-flexbox w-100">
                         <overlay-scrollbars :options="{ scrollbars: { autoHide: 'leave' }, className: 'os-theme-thin-light' }">
                             <div :class="`tab ${tab === 'info' ? 'active' : ''}`" @click="tab = 'info'">{{ $t('general.head.profile') }}</div>
                             <div v-if="profile.isOwner" class="tab" @click="openVipModal">{{ $t('general.profile.vip') }}</div>
@@ -23,6 +23,16 @@
                         </overlay-scrollbars>
                     </div>
                 </div>
+				<div class="profileMenuContainer mobile">
+					<div class="profileMenu col vertical-tabs-column mobile os-host-flexbox w-100">
+						<div :class="`tab ${tab === 'info' ? 'active' : ''}`" @click="tab = 'info'">{{ $t('general.head.profile') }}</div>
+						<div v-if="profile.isOwner" class="tab" @click="openVipModal">{{ $t('general.profile.vip') }}</div>
+						<div v-if="profile.isOwner" class="tab" @click="$router.push('/partner')">{{ $t('general.profile.partner') }}</div>
+						<div v-if="profile.isOwner" :class="`tab ${tab === 'security' ? 'active' : ''}`" @click="tab = 'security'">{{ $t('general.profile.security') }}</div>
+						<div v-if="profile.isOwner" :class="`tab ${tab === 'settings' ? 'active' : ''}`" @click="tab = 'settings'">{{ $t('general.profile.settings') }}</div>
+						<div v-if="profile.isOwner" class="tab" @click="logout">{{ $t('general.head.logout') }}</div>
+					</div>
+				</div>
             </div>
             <div class="profile-content">
                 <div class="incognito"  v-if="(!profile.isOwner && profile.user.private_profile) && (!user || user.user.access !== 'admin')">
@@ -199,7 +209,9 @@
                         </template>
                         <template v-else>
                             <div class="text-center" v-html="$t('general.profile.2fa_enabled')"></div>
-                            <button class="btn btn-primary mt-2 btn-block" @click="disable2FA">{{ $t('general.profile.disable_2fa') }}</button>
+							<div class="text-center  mt-2">
+								<button class="btn btn-primary mt-2 btn-block" @click="disable2FA">{{ $t('general.profile.disable_2fa') }}</button>
+							</div>
                         </template>
                     </div>
                 </div>
@@ -769,8 +781,7 @@
                 margin-bottom: $profile-padding;
                 width: calc(100% + #{$profile-padding * 2});
                 display: flex;
-                flex-direction: row;
-                font-size: 1.1em;
+                font-size: 1em;
                 align-items: center;
 
                 .profile {
@@ -791,12 +802,12 @@
                     }
                 }
 
-                .profileMenuContainer, .profileMenu .os-host {
+                .profileMenuContainer.pc, .profileMenu .os-host {
                     width: 0 !important;
                     flex: 1;
                 }
 
-                .profileMenu {
+                .profileMenu.pc {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
@@ -827,6 +838,31 @@
                         color: t('secondary');
                     }
                 }
+				
+				
+				.profileMenu.mobile {
+					display: flex;
+					flex-direction: column;
+					align-items: stretch;
+
+                    .tab {
+                        padding: 10px 15px;
+						border-left: 5px solid transparent;
+						background: transparent;
+						transition: border-left-color 0.3s ease, background 0.3s ease;
+						cursor: pointer;
+
+                        &:hover {
+                            background: darken(t('sidebar'), 3.3%);
+                        }
+                    }
+
+                    .tab.active {
+						background: darken(t('sidebar'), 3.3%);
+						border-left-color: t('secondary');
+                    }
+                }
+				
             }
 
             box-shadow: t('shadow');
@@ -908,6 +944,32 @@
             }
         }
     }
+	
+	@media (max-width: 1012px) {
+		.profileMenuContainer.pc {
+			display:none;
+		}
+		
+		.profile-header {
+			flex-direction: column;
+		}
+		
+		.profileMenuContainer.mobile, .profileMenu .os-host {
+				margin-top: 20px;
+				width: 100%;
+		}
+		
+	}
+	
+	@media (min-width: 1012px) {
+		.profileMenuContainer.mobile {
+			display:none;
+		}
+		
+		.profile-header {
+			flex-direction: row;
+		}
+	}
 
     @media (max-width: 1600px) {
         .profile-container .user-profit .chart {

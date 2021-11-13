@@ -6,8 +6,8 @@
 @use "sass:math";
 
 //Background left-sidebar
-$bg-leftbar:                                      #323742;
-$bg-leftbar-dark:                                 #323742;
+$bg-leftbar:                                      #fafafa;
+$bg-leftbar-dark:                                 #fafafa;
 
 // Leftbar width
 $leftbar-width:                                     250px;
@@ -26,32 +26,32 @@ $boxed-layout-width:                                1300px;
 // Compact sidebar
 $twocolumn-sidebar-width:                           220px;
 $twocolumn-sidebar-iconview-width:                  70px;
-$twocolumn-sidebar-bg:                            #ffffff;
+$twocolumn-sidebar-bg:                            #fafafa;
 $twocolumn-sidebar-iconview-bg:                   #5369f8;
 
 // Dark leftbar menu color
 $menu-item-color-dark:                            #9097a7;
 $menu-item-hover-color-dark:                      #c8cddc;
-$menu-item-active-color-dark:                     #ffffff;
+$menu-item-active-color-dark:                     #fafafa;
 
 //Menu item
 $menu-item:                                       $gray-700;
 $menu-item-hover:        $primary;
 $menu-item-active:       $primary;
 $menu-sub-item-active:                             $primary;
-$menu-item-size:                                    0.95rem;
-$menu-sub-item-size:                                0.875rem;
+$menu-item-size:                                    0.92rem;
+$menu-sub-item-size:                                0.85rem;
 
 // Horizontal Menu Item
 $hori-menu-item-color:                              #6e7488;
 
 //Rightbar Width
 $rightbar-width:                                    260px;
-$rightbar-bg:                                     #323742;
+$rightbar-bg:                                     #fafafa;
 
 //Topbar Background
-$bg-topbar-light:         #323742;
-$bg-topbar-dark:          #323742;
+$bg-topbar-light:         #fafafa;
+$bg-topbar-dark:          #fafafa;
 
 // Leftbar item shadow (Condensed item)
 $box-shadow-condensed:                              3px 5px 10px 0 rgba(154,161,171,.2); 
@@ -60,7 +60,7 @@ $box-shadow-condensed:                              3px 5px 10px 0 rgba(154,161,
 $topnav-height:                                     55px;
 
 // Topbar Height
-$topbar-height:                                     70px;
+$topbar-height:                                     0px;
 
 // Horizontal Layout
 $horizontal-layout-width:                           90%;
@@ -69,7 +69,7 @@ $horizontal-layout-width:                           90%;
 $body-min-height:                                   1750px;
 
 // Secondary font
-$font-family-secondary:                             'IBM Plex Sans', sans-serif;
+$font-family-secondary:                             'DM Sans', sans-serif;
 
 // Font weight
 $font-weight-medium:                                500;
@@ -93,11 +93,11 @@ $auth-img-bg:                                     url("../images/bg-auth.jpg");
 $apex-grid-color:                                 #f9f9fd;
 
 // Text-color (h1 to h6)
-$text-color-h:                                    #a1a8b8;
+$text-color-h:                                    $black;
 
 // Card overlay 
 $card-overlay-color:                              $gray-200;
-$card-overlay-bg:                                 #323742;
+$card-overlay-bg:                                 #fafafa;
 
 // Input light gray
 $input-light-bg:                                  #f3f7f9;
@@ -118,16 +118,16 @@ $chat-secondary-user-bg:          #f1f3fa;
 
 // scss-docs-start gray-color-variables
 $white:    #fff;
-$gray-100: #f8f9fa;
+$gray-100: #d6d6d6;
 $gray-200: #f6f6f7;
-$gray-300: #3b414e;
-$gray-400: #ced4da;
+$gray-300: darken($bg-leftbar, 1.5%);
+$gray-400: #3e3e3e;
 $gray-500: #adb5bd;
 $gray-600: #bcc1cc;
-$gray-700: #a1a8b8;
-$gray-800: #bcc1cc;
+$gray-700: #1b1b1b;
+$gray-800: #0b0b0b;
 $gray-900: #212529;
-$black:    #d6d9e0;
+$black:    #0b0b0b;
 
 // scss-docs-end gray-color-variables
 
@@ -148,7 +148,7 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue:    #ff5c75;
+$blue:    #3595f6;
 $indigo:  #564ab1;
 $purple:  #6f42c1;
 $pink:    #e83e8c;
@@ -180,8 +180,8 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary:       $blue;
-$secondary:     #450008;
+$primary:       #3595f6;
+$secondary:     #3d3d3d;
 $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
@@ -345,6 +345,14 @@ $enable-important-utilities:  true;
 
 $variable-prefix:             bs-;
 
+:root {
+	--bs-primary: #3595f6;
+	--bs-danger: #3d3d3d;
+	--bs-danger-rgb: 61, 61, 61;
+	--bs-primary-rgb: 24, 83, 219;
+	--bs-dark-rgb: 36, 36, 36;
+}
+
 // Gradient
 //
 // The gradient which is added to components if `$enable-gradients` is `true`
@@ -389,8 +397,8 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   #292d36;
-$body-color:                $gray-600;
+$body-bg:                   darken($bg-leftbar, 1.5%);
+$body-color:                $gray-400;
 $body-text-align:           null;
 
 
@@ -480,7 +488,7 @@ $border-widths: (
   5: 5px  
 );
 
-$border-color:                lighten($gray-300,2.5%);
+$border-color:                lighten($bg-leftbar,2.5%);
 // scss-docs-end border-variables
 
 // scss-docs-start border-radius-variables
@@ -529,7 +537,7 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'IBM Plex Sans', sans-serif;
+$font-family-sans-serif:      'DM Sans', sans-serif;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 // stylelint-enable value-keyword-case
 $font-family-base:            $font-family-sans-serif;
@@ -538,9 +546,9 @@ $font-family-code:            var(--#{$variable-prefix}font-monospace);
 // $font-size-root effects the value of `rem`, which is used for as well font sizes, paddings and margins
 // $font-size-base effects the font size of the body text
 $font-size-root:              null;
-$font-size-base:              0.875rem; // Assumes the browser default, typically `16px`
+$font-size-base:              0.85rem; // Assumes the browser default, typically `16px`
 $font-size-sm:                $font-size-base * .9;
-$font-size-lg:                $font-size-base * 1.25;
+$font-size-lg:                $font-size-base * 1.15;
 
 $font-weight-lighter:         lighter;
 $font-weight-light:           300;
@@ -577,7 +585,7 @@ $font-sizes: (
 $headings-margin-bottom:      $spacer;
 $headings-font-family:        null;
 $headings-font-style:         null;
-$headings-font-weight:        500;
+$headings-font-weight:        600;
 $headings-line-height:        1.1;
 $headings-color:              null;
 // scss-docs-end headings-variables
@@ -646,7 +654,7 @@ $table-cell-padding-x-sm:     .5rem;
 
 $table-cell-vertical-align:   top;
 
-$table-color:                 $body-color;
+$table-color:                 $gray-400;
 $table-bg:                    transparent;
 
 $table-th-font-weight:        null;
@@ -1145,8 +1153,8 @@ $dropdown-dark-link-disabled-color: $gray-500;
 $dropdown-dark-header-color:        $gray-500;
 // scss-docs-end dropdown-dark-variables
 
-$bg-leftbar-light:            #323742;
-$bg-leftbar-dark:             #323742;
+$bg-leftbar-light:            #ffffff;
+$bg-leftbar-dark:             #ffffff;
 
 $leftbar-width-collapsed:   70px;
 
@@ -1168,7 +1176,7 @@ $pagination-bg:                     $white;
 $pagination-border-width:           $border-width;
 $pagination-border-radius:          $border-radius;
 $pagination-margin-start:           -$pagination-border-width;
-$pagination-border-color:           $gray-300;
+$pagination-border-color:           darken($bg-leftbar, 1.5%);
 
 $menu-item-bg-hover:    #f7f7ff;
 
@@ -1179,7 +1187,7 @@ $pagination-focus-outline:          0;
 
 $pagination-hover-color:            $dark;
 $pagination-hover-bg:               $gray-200;
-$pagination-hover-border-color:     $gray-300;
+$pagination-hover-border-color:     darken($bg-leftbar, 1.5%);
 
 $pagination-active-color:           $component-active-color;
 $pagination-active-bg:              $component-active-bg;
@@ -1187,7 +1195,7 @@ $pagination-active-border-color:    $pagination-active-bg;
 
 $pagination-disabled-color:         $gray-600;
 $pagination-disabled-bg:            $white;
-$pagination-disabled-border-color:  $gray-300;
+$pagination-disabled-border-color:  darken($bg-leftbar, 1.5%);
 
 $bg-gradient:               linear-gradient(to bottom, #564ab1, #746dad);
 
@@ -1214,7 +1222,7 @@ $card-cap-bg:                       $gray-200;
 $card-cap-color:                    null;
 $card-height:                       null;
 $card-color:                        null;
-$card-bg:                           #323742;
+$card-bg:                           #ffffff;
 $card-img-overlay-padding:          1.25rem;
 $card-group-margin:                 math.div($grid-gutter-width, 2);
 // scss-docs-end card-variables
@@ -1359,7 +1367,7 @@ $modal-dialog-margin-y-sm-up:       1.75rem;
 $modal-title-line-height:           $line-height-base;
 
 $modal-content-color:               null;
-$modal-content-bg:                  #323742;
+$modal-content-bg:                  #ffffff;
 $modal-content-border-color:        transparent;
 $modal-content-border-width:        0;
 $modal-content-border-radius:       .2rem;

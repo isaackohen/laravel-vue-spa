@@ -71,14 +71,14 @@ class Rain extends Command
         $currency = Currency::all()[array_rand(Currency::all())];
 
         foreach ($users as $user) {
-            $user->balance($currency)->add(floatval($currency->option('rain')), Transaction::builder()->message('Rain (Global)')->get());
+            $user->balance($currency)->add(floatval(Settings::get('rain') / $currency->tokenPrice()), Transaction::builder()->message('Rain (Global)')->get());
             array_push($result, $user->toArray());
         }
 
         $message = Chat::create([
             'data' => [
                 'users' => $result,
-                'reward' => floatval($currency->option('rain')),
+                'reward' => floatval(Settings::get('rain') / $currency->tokenPrice()),
                 'currency' => $currency->id()
             ],
             'type' => 'rain'

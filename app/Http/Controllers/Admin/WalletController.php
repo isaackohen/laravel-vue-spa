@@ -44,7 +44,7 @@ class WalletController extends Controller
             ]);
         }
 
-        foreach(Invoice::latest()->limit(20)->get() as $invoice) {
+        foreach(Invoice::where('status', '1')->get() as $invoice) {
             array_push($invoices, [
                 'invoice' => $invoice->toArray(),
                 'user' => User::where('_id', $invoice->user)->first()

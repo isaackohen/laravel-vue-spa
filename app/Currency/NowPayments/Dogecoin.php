@@ -18,6 +18,10 @@ class Dogecoin extends NowPaymentsSupport {
         return "dogecoin";
     }
 
+    public function conversionID(): string {
+        return 'dogecoin';
+    }
+    
     public function displayName(): string {
         return "Dogecoin";
     }

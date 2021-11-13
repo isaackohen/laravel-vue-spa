@@ -6,24 +6,19 @@
                     <div class="logo">
                         <div class="logo"></div>
                         <div class="socials">
-                            <div class="social" onclick="window.open('#', '_blank')"><icon icon="fab fa-instagram"></icon></div>
-                            <div class="social" onclick="window.open('https://t.me/isaac_kohen', '_blank')"><icon icon="fab fa-telegram"></icon></div>
+                            <div class="social" onclick="window.open('https://t.me/Treasurekeychannel', '_blank')"><icon icon="fab fa-telegram"></icon></div>
                             <div class="social">18+</div>
                         </div>
                     </div>
                     <div class="links">
                         <div class="group">
+                            <a href="javascript:void(0)" @click="openTerms('privacy_policy')">{{ $t('footer.privacy_policy') }}</a>
                             <a href="javascript:void(0)" @click="openTerms('agreement')">{{ $t('footer.user_agreement') }}</a>
                             <a href="javascript:void(0)" @click="openTerms('faq')">{{ $t('general.head.help') }}</a>
                         </div>
-                        <div class="group">
-                            <a href="javascript:void(0)" @click="openTerms('privacy_policy')">{{ $t('footer.privacy_policy') }}</a>
-                            <router-link to="/partner">{{ $t('footer.affiliates') }}</router-link>
-
-                        </div>
                         <div v-if="!isGuest" class="group">
+                            <router-link to="/partner">{{ $t('footer.affiliates') }}</router-link>
                             <router-link :to="`/profile/${user.user._id}`">{{ $t('general.head.profile') }}</router-link>
-                            <a @click="openVipModal">{{ $t('general.profile.vip') }}</a>
                             <a href="javascript:void(0)" @click="logout">{{ $t('general.head.logout') }}</a>
                         </div>
 
@@ -37,14 +32,14 @@
                             </div>
                         </div>
                         <div class="title">{{ $t('footer.need_help') }}</div>
-                        <a href="https://t.me/isaac_kohen">Live-Chat</a>
+                        <a href="https://t.me/Treasurekeychannel">Live-Chat</a>
                     </div>
                 </div>
                 <div class="column">
                     <div class="copy">
                         &copy; 2021
                     </div>
-                    <div class="footer-logo" onclick="window.open('https://t.me/isaac_kohen', '_blank')"><img src="/img/misc/logo_white.svg" alt></div>
+                    <div class="footer-logo" onclick="window.open('https://t.me/Treasurekeychannel', '_blank')">TreasureKEY Casino</div>
                 </div>
             </div>
         </div>
@@ -140,7 +135,7 @@
                         .logo {
                             width: 200px;
                             height: 100px;
-                            background: url('https://cdn.davidkohen.com/i/davidkohen/logo.svg') no-repeat center;
+                            background: t('logo') no-repeat center;
                             background-size: contain;
                         }
 

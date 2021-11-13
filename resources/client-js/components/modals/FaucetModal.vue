@@ -481,86 +481,6 @@
                                 VipBonusModal.methods.open();
                             }
                         },
-                        mounted() {
-                            if('serviceWorker' in navigator) {
-                                const urlBase64ToUint8Array = function(base64String) {
-                                    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-                                    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-                                    const rawData = window.atob(base64);
-                                    const outputArray = new Uint8Array(rawData.length);
-                                    for (let i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
-                                    return outputArray
-                                };
-
-                                const subscribe = () => {
-                                    navigator.serviceWorker.ready.then(registration => {
-                                        const options = { userVisibleOnly: true };
-                                        const vapidPublicKey = window.Notifications.vapidPublicKey;
-
-                                        if(vapidPublicKey) options.applicationServerKey = urlBase64ToUint8Array(vapidPublicKey);
-
-                                        registration.pushManager.subscribe(options).then(subscription => {
-                                            updateSubscription(subscription);
-                                        }).catch(e => {
-                                            if(Notification.permission === 'denied') {
-                                                console.log('Permission for Notifications was denied');
-                                                this.$toast.error(this.$i18n.t('general.error.disabled_notifications'));
-                                            } else {
-                                                console.error('Unable to subscribe to push', e);
-                                            }
-                                        });
-                                    });
-                                };
-
-                                const updateSubscription = (subscription) => {
-                                    const key = subscription.getKey('p256dh');
-                                    const token = subscription.getKey('auth');
-                                    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
-                                    const data = {
-                                        endpoint: subscription.endpoint,
-                                        publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-                                        authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-                                        contentEncoding
-                                    };
-
-                                    axios.post('/api/subscription/update', data).then(() => $('[data-notification-bonus]').stop().slideUp('fast', () => $('[data-notification-bonus]').remove()));
-                                };
-
-                                navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(() => {
-                                    if(!('showNotification' in ServiceWorkerRegistration.prototype)) {
-                                        console.error('Notifications aren\'t supported');
-                                        $('[data-notification-bonus]').stop().slideUp('fast', () => $('[data-notification-bonus]').remove())
-                                        return;
-                                    }
-
-                                    if(!('PushManager' in window)) {
-                                        console.error('Push messaging isn\'t supported');
-                                        $('[data-notification-bonus]').stop().slideUp('fast', () => $('[data-notification-bonus]').remove())
-                                        return;
-                                    }
-
-                                    navigator.serviceWorker.ready.then(registration => {
-                                        registration.pushManager.getSubscription().then(subscription => {
-                                            if(!subscription) return;
-
-                                            updateSubscription(subscription);
-                                        }).catch(e => {
-                                            console.error('Error during getSubscription()', e);
-                                        });
-                                    });
-                                });
-
-                                $('[data-notification-bonus]').slideDown('fast');
-                                $('[data-notification-bonus]').on('click', () => {
-                                    if(this.isGuest) {
-                                        AuthModal.methods.open('auth');
-                                        return;
-                                    }
-
-                                    subscribe();
-                                });
-                            } else console.error('ServiceWorker isn\'t supported');
-                        },
                         template: `
                                 <div class="bonusContainer">
                                     <div data-bonus-modal-contents>
@@ -596,11 +516,6 @@
                                         <div class="sidebarEntry" @click="user.user.vipLevel === 0 ? openVipModal() : openVipBonusModal()">
                                         <div class="icon">
                                             <i class="fas fa-crown"></i>
-                                        </div>
-                                    </div>
-                                    <div class="sidebarEntry" data-notification-bonus>
-                                        <div class="icon">
-                                            <i class="fas fa-bell"></i>
                                         </div>
                                     </div>
                                 </div>

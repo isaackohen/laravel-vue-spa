@@ -3,6 +3,7 @@
 use App\Currency\Currency;
 use App\Events\MultiplayerTimerStart;
 use App\Game;
+use App\Settings;
 use App\Games\Kernel\Data;
 use App\Games\Kernel\GameCategory;
 use App\Games\Kernel\Metadata;
@@ -244,7 +245,7 @@ class Baccarat extends MultiplayerGame {
     public function customWagerCalculation(Data $data): ?bool {
         $totalBet = 0;
         foreach((array) $data->game()->bet as $key => $value) $totalBet += $value;
-        if($totalBet < Currency::find($data->currency())->minBet() || ($data->user() != null && $data->user()->balance(Currency::find($data->currency()))->demo($data->demo())->get() < $totalBet)) return false;
+        if($totalBet < floatval(Settings::get('min_bet') / Currency::find($data->currency())->tokenPrice()) || ($data->user() != null && $data->user()->balance(Currency::find($data->currency()))->demo($data->demo())->get() < $totalBet)) return false;
         $data->bet($totalBet);
         return true;
     }

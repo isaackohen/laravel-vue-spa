@@ -2,17 +2,21 @@
 
 namespace App;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 class Currency extends Model {
-    use CrudTrait;
 
     protected $collection = 'currencies';
     protected $connection = 'mongodb';
 
+
+    /* Old -- I dont think data is double needed fillable and on casts 
     protected $fillable = [
         'currency', 'data'
+    ];*/
+
+    protected $fillable = [
+        'currency'
     ];
 
     protected $casts = [

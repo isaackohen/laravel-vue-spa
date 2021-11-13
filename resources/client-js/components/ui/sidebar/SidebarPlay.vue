@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-block btn-primary mt-2 p-3 play-button" :disabled="dis" @click="onClick">
+    <button class="btn col-12 btn-primary mt-2 p-3 play-button" :disabled="dis" @click="onClick">
         {{ getButtonText() }}
     </button>
 </template>
@@ -37,7 +37,7 @@
                         if(ref.preStart) ref.preStart();
                         axios.post('/api/game/play', {
                             api_id: this.gameInstance.game.id,
-                            bet: ref.customWagerCalculation ? ref.customWagerCalculation() : (this.usd ? (this.gameInstance.bet / this.currencies[this.currency].price) : this.gameInstance.bet),
+                            bet: ref.customWagerCalculation ? ref.customWagerCalculation() : (this.usd ? ((this.gameInstance.bet / this.currencies[this.currency].price) * 1.0005) : this.gameInstance.bet),
                             demo: this.demo,
                             currency: this.currency,
                             quick: this.quick,
@@ -197,7 +197,7 @@
                 if(this.gameInstance.game.autoBetSettings.state) return this.$i18n.t('general.stop');
 
                 if(this.isExtendedGameStarted()) {
-                    if(this.gameInstance.game.currentProfit) return this.$i18n.t('general.take', { value: this.gameInstance.game.currentProfit });
+                    if(this.gameInstance.game.currentProfit) return this.$i18n.t('general.take', { value: ((this.usd ? '$' : '') + this.gameInstance.game.currentProfit) });
                     return this.$i18n.t('general.cancel');
                 }
                 return this.gameInstance.bettingType === 'manual' ? this.$i18n.t('general.play') : this.$i18n.t('general.start');

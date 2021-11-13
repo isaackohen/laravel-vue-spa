@@ -102,11 +102,13 @@ class PaymentsController
             ->first();  
 
         $user = User::find($invoice->user);
-        $invoice->update(['status' => 1, 'sum' => $request->get('actually_paid')]);
+        $currency = $invoice->currency;
+        $depositAmount = Currency::find($currency)->convertTokenToUSD(floatval($request->get('actually_paid')));
+        $invoice->update(['status' => 1, 'usd' => $depositAmount, 'sum' => $request->get('actually_paid')]);
 		$currency = $invoice->currency;
 
         $user->update(['wallet_'.$currency => null]);
-		if($user->first_deposit_bonus === 'activated'){
+		if(($user->first_deposit_bonus !== null) && ($user->first_deposit_bonus === 'activated')) {
 			$doubler = Currency::find($currency)->convertTokenToUSD(floatval($request->get('actually_paid') * 2));
 			$user->balance(Currency::find('local_bonus'))->add($doubler, Transaction::builder()->message('Deposit credited (Doubler Bonus)')->get());
 			$user->update([
@@ -116,12 +118,18 @@ class PaymentsController
 			event(new Deposit($user, Currency::find('local_bonus'), $doubler));
 		} else {
 			$user->balance(Currency::find($currency))->add(floatval($request->get('actually_paid')), Transaction::builder()->message('Deposit credited')->get());
-			$user->balance(Currency::find($currency))->add($request->get('actually_paid')); 
 			event(new Deposit($user, Currency::find($currency), floatval($request->get('actually_paid'))));
 		}
- 		$depositAmount = Currency::find($currency)->convertTokenToUSD(floatval($request->get('actually_paid')));
- 		TransactionStatistics::statsUpdate($user->_id, 'deposit_total', $depositAmount);
+ 			TransactionStatistics::statsUpdate($user->_id, 'deposit_total', $depositAmount);
 
+			$appName = env('APP_NAME');
+			$telegramChannel = env('TELEGRAM_CHANNEL_NOTIFICATIONS');
+			$appUrl = env('APP_URL');
+
+ 			//$messageAlert = "Deposited credited on Casino ".$appName." for ".$depositAmount."$ from user ".$user->name.".";
+			//$url = "http://alerts.sh/api/alert/telegramMessage?message=".$messageAlert."&button_text=Visit ".$appName."&button_url=".$appUrl."&channel=".$telegramChannel;
+			//Log::info($url);
+			//$result = file_get_contents($url);
 
         return response('Ok', 200)  
             ->header('Content-Type', 'text/plain'); 
@@ -142,7 +150,7 @@ class PaymentsController
 
 			$user->update(['wallet_'.$currency => null]);
 			
-			if($user->first_deposit_bonus === 'activated'){
+			if(($user->first_deposit_bonus !== null) && ($user->first_deposit_bonus === 'activated')) {
 				$doubler = Currency::find($currency)->convertTokenToUSD(floatval($request->get('amount') * 2));
 				$user->balance(Currency::find('local_bonus'))->add($doubler, Transaction::builder()->message('Deposit credited (Doubler Bonus)')->get());
 				$user->update([

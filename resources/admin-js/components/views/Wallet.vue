@@ -32,7 +32,6 @@
                                 <div class="card" :style="withdraw.user.vipLevel === 5 ? 'border: 1px solid #00fffb' : ''">
                                     <div class="card-body p-3">
                                         <div class="media">
-                                            <img :src="withdraw.user.avatar" class="mr-3 avatar-lg rounded">
                                             <div class="media-body">
                                                 <button class="btn btn-primary btn-sm" @click="ignoreWithdraw(withdraw.withdraw._id)" style="position: absolute; right: 15px;">-</button>
                                                 <h5 class="mt-1 mb-0">{{ withdraw.user.name }}</h5>
@@ -98,7 +97,6 @@
                         </template>
                         <div v-else>
                             <div class="media border-top pt-3" v-for="invoice in withdraws.invoices" v-if="invoice.invoice.status !== 0">
-                                <img :src="invoice.user.avatar" class="avatar rounded mr-3">
                                 <div class="media-body">
                                     <h6 class="mt-1 mb-0 font-size-15">{{ invoice.user.name }}</h6>
                                     <h6 class="text-muted font-weight-normal mt-2 mb-3">{{ invoice.invoice.sum.$numberDecimal ? parseFloat(invoice.invoice.sum.$numberDecimal).toFixed(invoice.invoice.currency.startsWith('local_') ? 2 : 8) : invoice.invoice.sum.toFixed(2) }} {{ currencies[invoice.invoice.currency].name }}<br><span class="font-weight-light">{{ new Date(invoice.invoice.created_at).toLocaleString() }}</span></h6>

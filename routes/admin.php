@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\CurrenciesController;
 use App\Http\Controllers\Admin\NotificationsController;
 
+
+Route::get('users/get', 'UserController@users');
+Route::get('extgames/games/get', 'GamesController@games');
+Route::get('extgames/providers/get', 'GamesController@providers');
 Route::get('/{vue_capture?}', 'MainController@main')->where("vue_capture", "[\\/\\w\\:.-]*");
 
 Route::prefix('stats')->group(function() {
@@ -20,7 +24,8 @@ Route::prefix('stats')->group(function() {
 
 Route::post('/info', 'MainController@info');
 Route::post('user', 'UserController@user');
-Route::post('users', 'UserController@users');
+Route::post('txstats', 'UserController@userTxStats');
+
 Route::post('checkDuplicates', 'UserController@checkDuplicates');
 Route::post('/ban', 'UserController@ban');
 Route::post('/role', 'UserController@role');
@@ -55,7 +60,10 @@ Route::post('/extToggle', 'GamesController@extToggle');
 
 Route::prefix('extgames')->group(function() {
 	Route::post('settings', 'GamesController@settings');
-	Route::post('games', 'GamesController@games');
+	Route::post('game', 'GamesController@game');
+	Route::post('updateProviders', 'GamesController@updateProviders');
+	Route::post('updateGames', 'GamesController@updateGames');
+	Route::post('restoreGamesList', 'GamesController@restoreGamesList');
 });
 
 Route::post('/currencyOption', 'CurrenciesController@currencyOption');
@@ -81,4 +89,11 @@ Route::prefix('promocode')->group(function() {
 	Route::post('remove', 'PromocodeController@remove');
 	Route::post('remove_inactive', 'PromocodeController@removeInactive');
 	Route::post('create', 'PromocodeController@create');
+});
+
+Route::prefix('challenges')->group(function() {
+	Route::post('get', 'ChallengesController@get');
+	Route::post('remove', 'ChallengesController@remove');
+	Route::post('remove_inactive', 'ChallengesController@removeInactive');
+	Route::post('create', 'ChallengesController@create');
 });

@@ -15,7 +15,7 @@
 						<div class="row align-items-center">
 							<div class="col-xl-10 col-lg-9">
 								<div class="mt-4 mt-lg-0">
-									<h5 class="mt-0 mb-1 fw-bold">Settings list</h5>
+									<h5 class="mt-0 mb-1 fw-bold">Bots options list</h5>
 									<p class="text-muted mb-2">
 										Launching bots to implement fake games, statistics. Optional bot settings (default values)
 									</p>

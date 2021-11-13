@@ -73,9 +73,7 @@ class MindepositUpdate extends Command {
 					$mindeposit = $responseCurrency->min_amount;
 					$mindepositusd = $mindeposit * $currency->tokenPrice();
 					$val = 'nowpayments_min_'.$currency->nowpayments();
-					if(Settings::where('name', $val)->first() === null){
-						Settings::create(['name' => $val, 'description' => 'NowPayments min deposit '.$currency->nowpayments(), 'value' => 0]);
-					} 
+					Settings::get($val, 0, true);
 					Settings::where('name', $val)->update(['value' => $mindepositusd]);
 				} catch (\Exception $exception) {
 					$this->error($exception);

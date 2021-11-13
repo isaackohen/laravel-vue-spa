@@ -18,13 +18,6 @@
                                     <th>Created at</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <router-link v-if="users" tag="tr" :to="'/admin/user/'+user._id" v-for="user in users" style="cursor: pointer" :key="user._id">
-                                    <td><img alt :src="user.avatar" style="width: 32px; height: 32px; margin-right: 5px;"> {{ user.name }}</td>
-                                    <td>{{ new Date(user.created_at).toLocaleString() }}</td>
-                                </router-link>
-                                <div v-else>This may take a while...</div>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -43,30 +36,56 @@
             }
         },
         created() {
-            axios.post('/admin/users').then(({data}) => {
-                this.users = data;
-
-                setTimeout(() => {
-                    $('#datatable').DataTable({
-                        destroy: true,
-                        "language": {
-                            "paginate": {
-                                "previous": "< ",
-                                "next": " >"
-                            }
-                        },
-                        "drawCallback": function () {
-                            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-                        }
-                    });
-                }, 1000);
-            });
+			$(document).ready(function () {
+				$('#datatable').DataTable({
+					"autoWidth": false,
+					processing: true,
+					pageLength: 50,
+					serverSide: true,
+					destroy: true,
+					ajax: "/admin/users/get",
+					columns: [
+						{ data: 'name',
+							"fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+								$(nTd).html("<a style='color:#6b768d' href='/admin/user/"+oData._id+"'><img alt src="+oData.avatar+" style='width: 32px; height: 32px; margin-right: 5px;'>"+oData.name+"</a>");
+							}
+						},
+						{ data: 'created_at',
+							render: function ( data, type, row ) {
+								return new Date(data).toLocaleString();
+							}
+						},
+						{
+							"render": function (data, type, row, meta) {
+								return "<a href='/admin/user/"+row._id+"'>View & Edit</a>"; 
+							}
+				 
+						}
+					 ],
+					"language": {
+						"paginate": {
+							"previous": "< ",
+							"next": " >"
+						},
+						"processing": "<div class='text-center mt-2'><div class='spinner-border m-2' role='status'><span class='visually-hidden'>Loading...</span></div></div>"
+					},
+					"drawCallback": function () {
+						$('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+					}
+				});
+			});
         }
     }
 </script>
 
 <style lang="scss">
     #datatable {
-        color: #6b768d;
+        color: #3e3e3e;
     }
+	
+	div#datatable_paginate {
+		margin: 0;
+		white-space: nowrap;
+		text-align: right;
+	}
 </style>

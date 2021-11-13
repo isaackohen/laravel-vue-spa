@@ -414,6 +414,23 @@ body[data-layout-mode="horizontal"] {
     }
 }
 
+@media (max-width: 1024px){
+    .navbar-custom {
+        left: 0;
+        padding: 0 10px;
+        margin: 0px;
+		
+        .button-menu-mobile.disable-btn {
+            display: block;
+
+        }
+
+        .logo-box {
+            display: none;
+        }
+    }
+}
+
 @media (max-width: 360px) {
     .navbar-custom {
         .topnav-menu {

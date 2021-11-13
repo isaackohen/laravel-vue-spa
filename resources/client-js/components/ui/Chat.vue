@@ -5,6 +5,7 @@
                 <select class="languageSelector" @change="setLanguage(language)" v-model="language">
                     <option :selected="locale === 'en'" value="en">🇺🇸&emsp;English</option>
                     <option :selected="locale === 'ru'" value="ru">🇷🇺&emsp;Русский</option>
+                    <!--
                     <option :selected="locale === 'es'" value="es">🇪🇸&emsp;Spanish</option>
                     <option :selected="locale === 'fa'" value="fa">🇮🇷&emsp;Persian</option>
                     <option :selected="locale === 'de'" value="de">🇩🇪&emsp;Deutsch</option>
@@ -12,6 +13,7 @@
                     <option :selected="locale === 'pt-br'" value="pt-br">🇧🇷&emsp;Brasileiro/Português</option>
                     <option :selected="locale === 'ko'" value="ko">🇰🇷&emsp;한국어</option>
                     <option :selected="locale === 'zh'" value="zh">🇨🇳&emsp;汉语</option>
+                    !-->
                 </select>
             </div>
             <div class="topWinners">
@@ -636,19 +638,20 @@
                         position: absolute;
                         text-align: center;
                         font-size: 13px !important;
-                        background: t('secondary');
+                        background: t('secondary-alternative');
                         left: 50%;
                         transform: translateX(-50%);
                         margin-top: 15px;
 
                         .ribbon-content {
-                            background: t('secondary');
+                            background: t('secondary-alternative');
                         }
                     }
 
                     .ribbon p {
-                        font-size: 14px !important;
+                        font-size: 12px !important;
                         margin: 0;
+                        letter-spacing: 0.2px;
                         padding: 10px;
 
                         b {
@@ -663,7 +666,7 @@
                         position: absolute;
                         display: block;
                         bottom: -1em;
-                        border: 1.5em solid darken(t('secondary'), 3%);
+                        border: 1.5em solid darken(t('secondary-alternative'), 2%);
                         z-index: -1;
                     }
 
@@ -680,7 +683,7 @@
                     }
 
                     .ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
-                        border-color: darken(t('secondary'), 7%) transparent transparent transparent;
+                        border-color: darken(t('secondary-alternative'), 3%) transparent transparent transparent;
                         position: absolute;
                         display: block;
                         border-style: solid;
@@ -1310,7 +1313,7 @@
                     left: 5px;
 
                     &:after {
-                        right: 291px !important;
+                        right: 275px !important;
                     }
                 }
 

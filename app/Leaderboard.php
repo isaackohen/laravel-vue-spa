@@ -63,12 +63,12 @@ class Leaderboard extends Model {
 		
 		$entryusd->update([
             'usd_wager' => $entryusd->usd_wager + $usd_wager,
-            'usd_profit' => $entryusd->usd_profit + $usd_profit
+            'usd_profit' => $entryusd->usd_profit + $usd_profit - $usd_wager
         ]);
 
         $entry->update([
             'wager' => $entry->wager + $game->wager,
-            'profit' => $entry->profit + $game->profit
+            'profit' => $entry->profit + $game->profit - $game->wager
         ]);
     }
 

@@ -857,11 +857,6 @@
     }
 
     @media(max-width: 480px) {
-        .card {
-            width: 105px !important;
-            height: 190px !important;
-        }
-
         .baccaratCardsPlayer {
             left: 10px !important;
         }

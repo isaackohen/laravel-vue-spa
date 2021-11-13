@@ -24,6 +24,7 @@ import VueContext from 'vue-context';
 import VueContentPlaceholders from 'vue-content-placeholders';
 import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
 import VueCompositionAPI from '@vue/composition-api';
+import VueFullscreen from 'vue-fullscreen';
 
 Vue.use(VueCompositionAPI);
 Vue.use(VueRouter);
@@ -40,6 +41,7 @@ Vue.use(VueFeather);
 Vue.use(infiniteScroll);
 Vue.use(ToggleButton);
 Vue.use(VTooltip);
+Vue.use(VueFullscreen);
 
 Vue.component(VueCountdown.name, VueCountdown);
 Vue.component('vue-context', VueContext);
@@ -66,5 +68,5 @@ if(!app.$isDebug())
         console.clear();
         console.log('%cStop!', 'background: black; color: red; font-size: 3.5em');
         console.log('%cThis is a browser feature intended for developers. If someone told you to copy and paste something here to enable a feature or \'hack\' someone\'s account, it is a scam and will give them access to your account.', 'font-size: 1.5em');
-    }, 10000); 
+    }, 1000); 
 

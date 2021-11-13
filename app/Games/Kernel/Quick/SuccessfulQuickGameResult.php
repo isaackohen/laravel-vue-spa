@@ -7,6 +7,7 @@ use App\Games\Kernel\ProvablyFair;
 use App\Games\Kernel\ProvablyFairResult;
 use App\Transaction;
 use App\User;
+use App\Settings;
 
 class SuccessfulQuickGameResult implements GameResult {
 
@@ -40,7 +41,7 @@ class SuccessfulQuickGameResult implements GameResult {
         $this->multiplier = $multiplier;
         $bet = $bet == null ? $data->bet() : $bet;
 
-        if($multiplier < 1 && $bet <= Currency::find($data->currency())->minBet()) $this->profit = 0;
+        if($multiplier < 1 && $bet <= floatval(Settings::get('min_bet') / Currency::find($data->currency())->tokenPrice())) $this->profit = 0;
         else $this->profit = ($bet * $multiplier);
 
         if(!$data->guest() && $this->profit > 0) $user->balance(Currency::find($data->currency()))->quiet()->demo($data->demo())->add($this->profit, Transaction::builder()->game($data->id())->message('Win')->get());

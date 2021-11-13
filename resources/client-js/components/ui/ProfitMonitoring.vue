@@ -87,11 +87,11 @@
                         enabled: false
                     },
                     stroke: {
-                        colors: [this.theme === 'dark' ? '#ec487f' : '#1652f0']
+                        colors: [this.theme === 'dark' ? '#1853db' : '#1853db']
                     },
                     fill: {
                         type: 'gradient',
-                        colors: [this.theme === 'dark' ? '#ec487f' : '#1652f0'],
+                        colors: [this.theme === 'dark' ? '#1853db' : '#1853db'],
                         gradient: {
                             shadeIntensity: 1,
                             inverseColors: false,

@@ -6,11 +6,11 @@
                 <div class="title">{{ $t('general.notifications.title') }}</div>
                 <div class="notifications-content os-host-flexbox">
                     <overlay-scrollbars :options="{ scrollbars: { autoHide: 'leave' }, className: 'os-theme-thin-light' }">
-                        <div role="alert" class="toast" data-autohide="false" v-for="notification in log">
+                        <div role="alert" class="toast fade show" data-bs-autohide="false" v-for="notification in log">
                             <div class="toast-header">
                                 <icon :icon="notification.icon" style="margin-right: 5px"></icon>
                                 <span class="mr-auto" v-html="$t(notification.title)"></span>
-                                <i @click="dismiss(notification._id)" class="fal fa-times" data-dismiss="toast"></i>
+                                <i @click="dismiss(notification._id)" class="fal fa-times" data-bs-dismiss="toast"></i>
                             </div>
                             <div class="toast-body" v-html="$t(notification.message, notification.data)"></div>
                         </div>

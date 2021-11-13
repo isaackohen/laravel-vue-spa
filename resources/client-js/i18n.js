@@ -27,5 +27,6 @@ export default new VueI18n({
     pluralizationRules,
     locale: selectedLocale,
     fallbackLocale: 'en',
-    messages: loadLocaleMessages()
+    messages: loadLocaleMessages(),
+	silentTranslationWarn: true
 });

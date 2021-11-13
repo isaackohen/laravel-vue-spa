@@ -1,5 +1,4 @@
 {
-	"authHost": "http://s1.davidkohen.com",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -20,8 +19,8 @@
 	"protocol": "https",
 	"socketio": {},
 	"secureOptions": 67108864,
-	"sslCertPath": "/etc/letsencrypt/live/s1.davidkohen.com/fullchain.pem",
-	"sslKeyPath": "/etc/letsencrypt/live/s1.davidkohen.com/privkey.pem",
+	"sslCertPath": "/home/ploi/beta.treasurekey.io/fullchain.pem",
+	"sslKeyPath": "/home/ploi/beta.treasurekey.io/privkey.pem",
 	"sslCertChainPath": "",
 	"sslPassphrase": "",
 	"subscribers": {

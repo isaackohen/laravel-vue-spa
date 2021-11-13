@@ -72,7 +72,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-hidden="true"></button>
                         <h5 class="modal-title">Global Notification</h5>
                     </div>
                     <div class="modal-body p-4">
@@ -107,7 +107,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-hidden="true"></button>
                         <h5 class="modal-title">Notification</h5>
                     </div>
                     <div class="modal-body p-4">
@@ -142,7 +142,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-hidden="true"></button>
                         <h5 class="modal-title">Push Notification</h5>
                     </div>
                     <div class="modal-body p-4">

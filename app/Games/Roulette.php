@@ -2,6 +2,7 @@
 
 use App\Currency\Currency;
 use App\Game;
+use App\Settings;
 use App\Games\Kernel\Data;
 use App\Games\Kernel\GameCategory;
 use App\Games\Kernel\Metadata;
@@ -63,7 +64,7 @@ class Roulette extends QuickGame implements MultiplierCanBeLimited {
     function start($user, Data $data) {
         $totalBet = 0;
         foreach((array) $data->game()->bet as $key => $value) $totalBet += $value;
-        if($totalBet < Currency::find($data->currency())->minBet() || ($user != null && $user->balance(Currency::find($data->currency()))->demo($data->demo())->get() < $totalBet)) return new RejectedGameResult(-1, 'Invalid wager value (chips)');
+        if($totalBet < floatval(Settings::get('min_bet') / Currency::find($data->currency())->tokenPrice()) || ($user != null && $user->balance(Currency::find($data->currency()))->demo($data->demo())->get() < $totalBet)) return new RejectedGameResult(-1, 'Invalid wager value (chips)');
         $data->bet($totalBet);
 
         return new SuccessfulQuickGameResult((new ProvablyFair($this))->result(), function(SuccessfulQuickGameResult $result, array $transformedResults) use($user, $data, $totalBet) {

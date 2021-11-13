@@ -11,6 +11,8 @@ use App\Utils\APIResponse;
 use Illuminate\Http\Request;
 use MongoDB\BSON\Decimal128;
 use App\Http\Controllers\Controller;
+use App\TransactionStatistics;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -39,14 +41,86 @@ class UserController extends Controller
 			'wins' => Game::where('demo', '!=', true)->where('status', 'win')->where('user', $user->_id)->count(),
 			'losses' => Game::where('demo', '!=', true)->where('status', 'lose')->where('user', $user->_id)->count(),
 			'transactions' => Transaction::where('user', $user->_id)->where('demo', '!=', true)->get()->toArray(),
-			'gamesArray' => Game::where('demo', '!=', true)->where('user', $user->_id)->get()->toArray(),
-			'currencies' => $currencies
+			'freespins' => $user->makeVisible($user->hidden)->freespins ?? 0,
+			'currencies' => $currencies,
+			'gamesArray' => Game::where('demo', '!=', true)->where('user', $user->_id)->get()->toArray()]);
+    }
+
+
+    public function userTxStats(Request $request)
+    {
+		$user = User::where('_id', $request->id)->first();
+		$TransactionStats = TransactionStatistics::statsGet($user->_id);
+		$TransactionStats = $TransactionStats[0];
+		return APIResponse::success([
+			'promocode' => $TransactionStats['promocode'],
+			'weeklybonus' => $TransactionStats['weeklybonus'],
+			'freespins_amount' => $TransactionStats['freespins_amount'],
+			'faucet' => $TransactionStats['faucet'],
+			'challenges' => $TransactionStats['challenges'],
+			'depositbonus' => $TransactionStats['depositbonus'],
+			'deposit_total' => $TransactionStats['deposit_total'],
+			'deposit_count' => $TransactionStats['deposit_count'],
+			'withdraw_count' => $TransactionStats['withdraw_count'],
+			'withdraw_total' => $TransactionStats['withdraw_total'],
+			'vip_progress' => $TransactionStats['vip_progress']
 		]);
     }
 	
-	public function users()
+	public function users(Request $request)
     {
-		return APIResponse::success(User::where('bot', '!=', true)->get()->toArray());
+		$draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value'] ?? null; // Search value
+
+        // Total records
+        $totalRecords = User::where('bot', '!=', true)->select('count(*) as allcount')->count();
+
+        // Fetch records
+		if(!$searchValue){
+			$records = User::where('bot', '!=', true)->orderBy($columnName,$columnSortOrder)
+				->skip(intval($start))
+				->take(intval($rowperpage))
+				->get();
+			$totalRecordswithFilter = User::where('bot', '!=', true)->select('count(*) as allcount')->count();
+		} else {
+			$records = User::where('bot', '!=', true)->orderBy($columnName,$columnSortOrder)
+				->where('name', 'like', '%' .$searchValue . '%')
+				->skip(intval($start))
+				->take(intval($rowperpage))
+				->get();
+			$totalRecordswithFilter = User::where('bot', '!=', true)->select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+		}
+
+        $data_arr = array();
+        $sno = $start+1;
+        foreach($records as $record){
+            $data_arr[] = array(
+				"_id" => $record->_id,
+				"avatar" => $record->avatar,
+                "name" => $record->name,
+                "created_at" => $record->created_at,
+            );
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        ); 
+
+		return APIResponse::success($response);
     }
 	
 	public function checkDuplicates(Request $request)

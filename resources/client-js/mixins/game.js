@@ -86,7 +86,7 @@ Vue.mixin({
                     i.game.extendedId = data.data.game._id;
                     i.game.extendedState = 'in-progress';
                     i.game.profit = null;
-                    i.game.currentProfit = this.rawBitcoin(data.data.game.currency, data.data.game.wager * data.data.game.multiplier);
+                    i.game.currentProfit = this.usd ? ((data.data.game.wager * data.data.game.multiplier) * this.currencies[data.data.game.currency].price).toFixed(3) : this.rawBitcoin(data.data.game.currency, data.data.game.wager * data.data.game.multiplier);
                     i.playTimeout = false;
                     i.bet = data.data.game.wager;
                 });
@@ -258,7 +258,7 @@ Vue.mixin({
                     ${this.demo ? `<div class="demoHeader">${this.$i18n.t('general.head.wallet_demo')}</div>` : ''}
                     <div class="multiplier">${status === 'lose' && game.multiplier >= 1 ? (0).toFixed(2) : game.multiplier.toFixed(2)}x</div>
                     <div class="divider"></div>
-                    <div class="profit">${game.profit.toFixed(game.currency.startsWith('local_') ? 2 : 8)} <icon :icon="fad fa-gem"></div>
+                    <div class="profit">${this.usd ? ('$' + (game.profit * this.currencies[game.currency].price).toFixed(2)) : game.profit.toFixed(game.currency.startsWith('local_') ? 2 : 8)} <icon :icon="fad fa-gem"></div>
                 </div>
             `);
             $('.game-content').append(resultPopup);
@@ -324,9 +324,8 @@ Vue.mixin({
                 this.updateGameInstance((i) => i.playTimeout = true);
 
                 axios.post('/api/game/finish', { id: this.extendedGameId() }).then((data) => {
-					console.log(data);
-                    changeState(data);
-                    if(requestCallback) requestCallback(data);
+                    changeState(data.data);
+                    if(requestCallback) requestCallback(data.data);
                 }, () => {
                     if(requestCallback) requestCallback({ game: { status: 'lose' } });
                     changeState(null);

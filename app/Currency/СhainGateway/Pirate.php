@@ -20,6 +20,10 @@ class Pirate extends СhainGatewaySupport {
         return 'pirate';
     }
 
+    public function conversionID(): string {
+        return 'pirate';
+    }
+
     public function displayName(): string {
         return "PIRATE";
     }

@@ -17,6 +17,7 @@ use App\Events\LiveFeedGame;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Settings;
+use App\Challenges;
 
 class ExternalController
 {
@@ -35,7 +36,7 @@ class ExternalController
 	
 	public function methodBet(Request $request) 
 	{
-		Log::alert($request->fullUrl());
+		//Log::alert($request->fullUrl());
         $user = User::where('_id', $_GET["playerid"])->first();
         $currency = Currency::find($_GET["currency"]);
         $win = $_GET["win"];
@@ -67,7 +68,7 @@ class ExternalController
             $status = 'lose';
             if($win > $wager) $status = 'win';
             if($wager > 0) {
-                $multi = (float) ($win / $wager);
+                $multi = floatval(number_format(($win / $wager), 2, '.', ''));
             } else {
                 $multi = 0;
             }
@@ -90,7 +91,6 @@ class ExternalController
             ]);
 
             event(new LiveFeedGame($game, '1'));
-            Leaderboard::insert($game);
 			Statistics::insert(
 				$game->user, 
 				$game->currency, 
@@ -98,7 +98,17 @@ class ExternalController
 				$game->multiplier, 
 				$game->profit
 			);
+
+            $multiAllow = 0;
+            if($multi > floatval(1.20) || $multi < floatval(0.95)) {
+                $multiAllow = '1';
+            }
+
+            if($wagerFloat > 0.08 && $multiAllow === '1') {    
+            Challenges::check($gameid, $wagerFloat, $multi, $user->_id);
+            Leaderboard::insert($game);
 			if ($user->vipLevel() > 0 && ($user->weekly_bonus ?? 0) < 100 && ((Settings::get('weekly_bonus_minbet') / Currency::find(Settings::get('bonus_currency'))->tokenPrice()) ?? 1) <= $game->wager) $user->update(['weekly_bonus' => ($user->weekly_bonus ?? 0) + 0.1]);
+            }
         }
  
         $getBalance = $user->balance($currency)->get();
@@ -142,13 +152,11 @@ class ExternalController
 				$userId = auth('sanctum')->user()->id;
 				$currencyId = auth('sanctum')->user()->clientCurrency()->id();
 			}
-
-                if($request->mode === true) {
-                    $mode = 'real';
-                }   else {
-                    $mode = 'demo';
-                }
-            $mode = $request->RealMode ?? 'real';
+			if($request->mode === true) {
+				$mode = 'real';
+			} else {
+				$mode = 'demo';
+			}
 			$apikey = env('API_KEY');
 			$url = "https://api.dk.games/v2/createSession?apikey=".$apikey."&userid=".$userId."-".$currencyId."&game=".$request->id."&mode=".$mode;
 			$result = file_get_contents($url);
@@ -157,7 +165,7 @@ class ExternalController
 			$gameslist = (Gameslist::where('id', $request->id)->first());
 			return APIResponse::success([
 				'url' => $decodeArray['url'],
-                'mode' => false,
+                'mode' => ($mode === 'real' ? true : false),
 				'id' => $gameslist['id'],
 				'name' => $gameslist['name'],
                 'image' => $gameslist['image'],

@@ -10,15 +10,27 @@
 		</div>
 
         <div class="dashboard">
-            <div class="spinner-border d-flex ml-auto mr-auto" v-if="!deposits"></div>
+			<div class="text-center mt-2" v-if="!deposits">
+				<div class="spinner-border m-2" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
             <div v-else v-html="deposits"></div>
         </div>
         <div class="dashboard_analytics">
-            <div class="spinner-border d-flex ml-auto mr-auto mt-3" v-if="!analytics"></div>
+			<div class="text-center mt-2" v-if="!analytics">
+				<div class="spinner-border m-2" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
             <div v-else v-html="analytics"></div>
         </div>
         <div class="dashboard_games">
-            <div class="spinner-border d-flex ml-auto mr-auto mt-3" v-if="!gamesAnalytics"></div>
+			<div class="text-center mt-2" v-if="!gamesAnalytics">
+				<div class="spinner-border m-2" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
             <div v-else v-html="gamesAnalytics"></div>
         </div>
     </div>

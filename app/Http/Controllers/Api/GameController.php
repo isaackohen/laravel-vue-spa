@@ -32,8 +32,8 @@ class GameController
 
         if(auth()->user() == null && !$request->demo) return ['code' => -2, 'message' => 'Not authorized'];
         if(auth()->user() == null && $request->demo) return APIResponse::reject(-2, 'Please login to play');
-		if(!$game->usesCustomWagerCalculations() && floatval($request->bet) < floatval(Currency::find($request->currency)->option('min_bet'))) return ['code' => -1, 'message' => 'Invalid wager value'];
-		if(!$game->usesCustomWagerCalculations() && floatval($request->bet) > floatval(Currency::find($request->currency)->option('max_bet'))) return ['code' => -9, 'message' => 'Invalid wager value'];
+		if(!$game->usesCustomWagerCalculations() && floatval($request->bet) < floatval(Settings::get('min_bet') / Currency::find($request->currency)->tokenPrice())) return ['code' => -1, 'message' => 'Invalid wager value'];
+		if(!$game->usesCustomWagerCalculations() && floatval($request->bet) > floatval(Settings::get('max_bet') / Currency::find($request->currency)->tokenPrice())) return ['code' => -9, 'message' => 'Invalid wager value'];
 		if(auth()->user() != null && (auth()->user()->balance(Currency::find($request->currency))->demo($request->demo)->get() < floatval($request->bet))) return ['code' => -4, 'message' => 'Not enough money'];
  
         $data = new Data(auth()->user(), [
@@ -45,7 +45,7 @@ class GameController
             'data' => (array) $request->data
         ]);
 		
-		if(auth()->user() != null && auth()->user()->referral != null && auth()->user()->games() >= floatval(\App\Settings::get('referrer_activity_requirement', 100))) {
+		if(auth()->user() != null && auth()->user()->referral != null && auth()->user()->games() >= floatval(Settings::get('referrer_activity_requirement', 100))) {
             $referrer = \App\User::where('_id', $this->user->referral)->first();
             $referrals = $referrer->referral_wager_obtained ?? [];
             if(!in_array(auth()->user()->_id, $referrals)) {

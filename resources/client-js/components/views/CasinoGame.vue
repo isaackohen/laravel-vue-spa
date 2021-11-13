@@ -5,39 +5,47 @@
 		</div>
 		<div v-if="!isGuest" class="container-lg">
 			<template v-if="!Loading">
-				<div :class="`game-container game-${$route.params.id}`">
-					<div id="slotcontainer">
-						<div class="gameWrapper">
-							 <iframe :src="externalgame.url"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+				<div :key="componentKey" v-if="!LoadingMode">
+					<div :class="`game-container game-${$route.params.id}`">
+						<div id="slotcontainer">
+							<div class="gameWrapper">
+								<fullscreen :fullscreen.sync="fullscreen">
+									<iframe :src="externalgame.url"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+								</fullscreen>
+							</div>
 						</div>
-					</div>
-					<div class="gameFooter">
-						<b>{{ externalgame.name }}</b>
-						<small>by <u style="cursor: pointer;" @click="$router.push(`/game/provider/${externalgame.provider}`)">{{ externalgame.provider }}</u></small>
-						<div class="right">
-							<div class="form-check pl-0">
-                        		<label class="form-check-label">{{ $t('general.games.toggleDemoMode') }}</label>
-                        		<toggle-button class="toggleDemoMode" :value="RealMode" @change="toggleDemoMode" :labels="{checked: 'real', unchecked: 'demo'}"/>
-                    		</div>
+						<div class="gameFooter">
+							<div class="right">
+								<div>
+									<div class="items-info">
+										<b>{{ externalgame.name }}</b>
+										<small style="margin-left:3px;">by <u style="cursor: pointer;" @click="$router.push(`/game/provider/${externalgame.provider}`)">{{ externalgame.provider }}</u></small>
+									</div>
+									<div class="items-info">
+										<toggle-button class="toggleDemoMode" :value="RealMode" @change="toggleDemoMode(RealMode == true ? false : true)" :labels="{checked: 'real', unchecked: 'demo'}" :width="60" />
+									</div>
+								</div>
+								<button title="Play Full Screen" @click="showFull" class="btn btn-primary btn-settings"><i class="fas fa-expand" aria-hidden="true"></i></button>
+							</div>
 						</div>
-					</div>
-				</div> 
-				<div class="container-fluid game-container-slick">
-					<div class="games-arrows" id="c1-arrows">
-					  <div class="games-arrow" @click="showPrev"><i class="fas fa-arrow-circle-left"></i></div>
-					  <div class="games-arrow" @click="showNext"><i class="fas fa-arrow-circle-right"></i></div>
-					</div>
-					<VueSlickCarousel ref="casinoCarousel" v-bind="carouselSettings">
-						<div v-for="footerGame in footerGames">
-							<div :class="`game_poster_${footerGame.type} game-${footerGame.id} game_type-${footerGame.type} hvr-grow`">
-								<div :class="`game_poster_${footerGame.type}-image game_tp-image`" v-if="footerGame.ext" :style="`background: url('https://cdn.davidkohen.com/games${footerGame.icon}?q=85&auto=format&sharp=5&w=205&h=137&fit=crop&usm=5') no-repeat !important; background-size: cover !important;`"  @click="footerGame.ext ? $router.push(`/casino/${footerGame.id}`) : $router.push(`/game/${footerGame.id}`)">
-									<div :class="`game_poster_${footerGame.type}-name`" v-if="!footerGame.ext"  @click="footerGame.ext ? $router.push(`/casino/${footerGame.id}`) : $router.push(`/game/${footerGame.id}`)">
-										{{ footerGame.name }}
+					</div> 
+					<div class="container-fluid game-container-slick">
+						<div class="games-arrows" id="c1-arrows">
+						  <div class="games-arrow" @click="showPrev"><i class="fas fa-arrow-circle-left"></i></div>
+						  <div class="games-arrow" @click="showNext"><i class="fas fa-arrow-circle-right"></i></div>
+						</div>
+						<VueSlickCarousel ref="casinoCarousel" v-bind="carouselSettings">
+							<div v-for="footerGame in footerGames">
+								<div :class="`game_poster_${footerGame.type} game-${footerGame.id} game_type-${footerGame.type} hvr-grow`">
+									<div :class="`game_poster_${footerGame.type}-image game_tp-image`" v-if="footerGame.ext" :style="`background: url('https://games.cdn4.dk/games${footerGame.icon}?q=85&auto=format&sharp=5&w=135&h=100&fit=crop&usm=5') no-repeat !important; background-size: cover !important;`"  @click="footerGame.ext ? $router.push(`/casino/${footerGame.id}`) : $router.push(`/game/${footerGame.id}`)">
+										<div :class="`game_poster_${footerGame.type}-name`" v-if="!footerGame.ext"  @click="footerGame.ext ? $router.push(`/casino/${footerGame.id}`) : $router.push(`/game/${footerGame.id}`)">
+											{{ footerGame.name }}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</VueSlickCarousel>
+						</VueSlickCarousel>
+					</div>
 				</div>
 			</template>
 			<div v-else class="games-load">
@@ -55,24 +63,26 @@
             return {
             	RealMode: null,
 				Loading: true,
+				LoadingMode: true,
+				componentKey: 0,
                 carouselSettings: {
                   "dots": false,
                   "arrows": false,
                   "infinite": false,
                   "speed": 500,
-                  "slidesToShow": 5,
+                  "slidesToShow": 4,
                   "slidesToScroll": 1,
                   "cssEase": 'cubic-bezier(0.175, 0.885, 0.320, 1.275)',
                   "responsive": [
                     {
-                      "breakpoint": 1250,
+                      "breakpoint": 950,
                       "settings": {
-                        "slidesToShow": 4,
+                        "slidesToShow": 3,
                         "slidesToScroll": 2
                       }
                     },
                     {
-                      "breakpoint": 1050,
+                      "breakpoint": 800,
                       "settings": {
                         "slidesToShow": 3,
                         "slidesToScroll": 1
@@ -88,7 +98,8 @@
                   ]
                 },
                 footerGames: [],
-                externalgame: null
+                externalgame: null,
+				fullscreen: false
             }
         },
         methods: {
@@ -98,23 +109,39 @@
             showPrev() {
                 this.$refs.casinoCarousel.prev()
             },
-            toggleDemoMode() {
-	            axios.post('/api/externalGame/getUrl', { id: this.$route.params.id, mode: this.RealMode }).then(({ data }) => {
+            toggleDemoMode(mode) {
+	            axios.post('/api/externalGame/getUrl', { id: this.$route.params.id, mode: mode}).then(({ data }) => {
+					this.LoadingMode = true; 
 	                this.externalgame = data;
-	            	this.RealMode = externalgame.mode;
+	            	this.RealMode = data.mode;
+					this.forceRerender();
 	           });
             },
+			forceRerender() {
+				  this.componentKey += 1;  
+				  this.LoadingMode = false;
+			},
+			showFull() {
+				this.fullscreen = !this.fullscreen;
+			}
         },
         computed: {
-            ...mapGetters(['isGuest', 'gameInstance'])
+            ...mapGetters(['isGuest', 'currency', 'gameInstance'])
         },
+		watch: {
+			currency() {
+				this.toggleDemoMode(this.RealMode);
+            },
+		},
         components: { VueSlickCarousel },
         created() {
+			this.RealMode = true;
             axios.post('/api/externalGame/getUrl', { id: this.$route.params.id, mode: this.RealMode }).then(({ data }) => {
                 this.externalgame = data;
 				this.$store.dispatch('pushRecentGame', data.id);
 				this.RealMode = true;
 				this.Loading = false;
+				this.LoadingMode = false;
            });
             axios.post('/api/externalGame/getGamesbyProvider', { id: this.$route.params.id }).then(({ data }) => {
                 this.footerGames = data;
@@ -207,6 +234,11 @@
 		}
 	}
 
+	.v-switch-core {
+			@include themed() {
+				background-color: t('secondary') !important;
+			}
+	}
 
 	 @include media-breakpoint-down(sm) {
 	 
@@ -492,6 +524,28 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
+		}
+		
+		@media (min-width: 992px) {
+			.container-lg, .container-md, .container-sm, .container {
+				max-width: 960px !important;
+			}
+		}
+		
+		@media only screen 
+		  and (min-width: 1024px) 
+		  and (max-height: 1366px) 
+		  and (-webkit-min-device-pixel-ratio: 1.5) {
+			.container-lg, .container-md, .container-sm, .container {
+				max-width: 660px !important;
+			}
+		}
+		
+		.btn-settings {
+			height: 35px;
+			width: 45px;
+			margin-right: 10px;
+			margin-left: auto;
 		}
 
 </style>

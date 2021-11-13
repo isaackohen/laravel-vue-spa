@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin-Panel</title>
+        <title>Casino Admin</title>
         <script src="https://kit.fontawesome.com/23f13eab24.js" crossorigin="anonymous"></script>
 
         <meta charset="utf-8">

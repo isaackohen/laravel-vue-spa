@@ -19,7 +19,7 @@
                                 <div>
                                     {{ currency.displayName }}
                                 </div>
-                                <div class="ml-auto">
+                                <div class="ms-auto">
                                     <select @change="toggleCurrency(currency.walletId, $event.target.value)">
                                         <option value="disabled">Disabled</option>
 										<option :selected="currencies['cg_' + currency.walletId]" value="cg" v-if="Object.values(data.coins).filter((e) => e.walletId === currency.walletId && e.id.startsWith('cg_')).length > 0">СhainGateway</option>
